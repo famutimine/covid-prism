@@ -51,13 +51,13 @@ def user_input_features():
 	return [input_features]
     
 def st_shap(plot, height=None):
-  shap_html = f"<head>{shap.getjs()}</head><body>{plot.html()}</body>"
+	shap_html = f"<head>{shap.getjs()}</head><body>{plot.html()}</body>"
 	components.html(shap_html, height=height)
 def explain_model_prediction(data):
-    # Calculate Shap values
-  shap_values = explainer.shap_values(data)
-  p = shap.force_plot(explainer.expected_value, shap_values, data)
-  return p, shap_values
+	# Calculate Shap values
+	shap_values = explainer.shap_values(data)
+	p = shap.force_plot(explainer.expected_value, shap_values, data)
+	return p, shap_values
 	
 df = user_input_features()
 model=XGBClassifier()
@@ -72,19 +72,19 @@ if submit:
 	st.write('---')
 	
   #explainer force_plot
-  p, shap_values = explain_model_prediction(df)
-  st.subheader('Model Prediction Interpretation Plot')
-  st_shap(p)
+  	p, shap_values = explain_model_prediction(df)
+  	st.subheader('Model Prediction Interpretation Plot')
+  	st_shap(p)
       
-  st.subheader('Summary Plot 1')
-  fig, ax = plt.subplots(nrows=1, ncols=1)
-  shap.summary_plot(shap_values, df)
-  st.pyplot(fig)
+  	st.subheader('Summary Plot 1')
+  	fig, ax = plt.subplots(nrows=1, ncols=1)
+  	shap.summary_plot(shap_values, df)
+  	st.pyplot(fig)
 
-  st.subheader('Summary Plot 2')
-  fig, ax = plt.subplots(nrows=1, ncols=1)
-  shap.summary_plot(shap_values, df, plot_type='bar', max_display=10)
-  st.pyplot(fig)
+  	st.subheader('Summary Plot 2')
+  	fig, ax = plt.subplots(nrows=1, ncols=1)
+  	shap.summary_plot(shap_values, df, plot_type='bar', max_display=10)
+  	st.pyplot(fig)
 
     
 	st.markdown('''**Disclaimer**: This tool (hereinafter referred to as "COVID-PRISM / Algorithm") is being made publicly available for academic 
