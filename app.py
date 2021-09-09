@@ -31,6 +31,7 @@ hide_streamlit_style = """
 footer {visibility: hidden;}
 </style>
 """
+st.image("https://imgur.com/a/IU1vq00",width=400)
 st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 st.markdown('''_A Real Time **COVID**-19 **P**ersonalized **R**isk **I**ntelligence **S**ystem for **M**ortality_.''')
 st.markdown('''**Important Note**: The current model (COVID-PRISM) was developed using data from 1,202 patients hospitalized
@@ -56,17 +57,6 @@ def user_input_features():
     input_features["HGB"] = st.number_input(label='Hemoglobin level (g/dL)', value=15.00, format="%.2f")
     input_features["Lymphocyte count"] = st.number_input(label='Absolute Lymphocyte Count (10^9/L)', value=0.30, format="%.2f")
     input_features["SpO2"] = st.number_input(label='Blood Oxygen Saturation (%)', value=92)
-#     data={"BUN": 35,
-#           "CRP": 40.00,
-#           "RR": 35,
-#           "Creatinine": 0.50,
-#           "HR": 130,
-#           "SBP": 90,
-#           "Albumin":2.30,
-#           "HGB":15.00,
-#           "Lymphocyte count": 0.30,
-#           "SpO2":92}
-#     features=pd.DataFrame(data,index=[0])
     return [input_features]
 
 
