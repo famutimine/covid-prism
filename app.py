@@ -35,19 +35,19 @@ This means that any patient with a mortality probability of 12% or higher is con
 covid_df=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid_data.csv',index_col=[0])
 X = covid_df.iloc[:, :-1]
 Y = covid_df.iloc[:, -1]
-st.sidebar.header('Please fill in current values')
+st.header('Please fill in current values')
 def user_input_features():
     input_features = {}
-    input_features["BUN"] = st.sidebar.number_input(label='Blood Urea Nitrogen (mg/dL)', value=35)
-    input_features["CRP"] = st.sidebar.number_input(label='C-reactive Protein (mg/L)', value=40.00, format="%.2f")
-    input_features["RR"] = st.sidebar.number_input(label='Respiratory Rate (breaths/min)', value=35)
-    input_features["Creatinine"] = st.sidebar.number_input(label='Serum Creatinine (mg/L)', value=0.50, format="%.2f")
-    input_features["HR"] = st.sidebar.number_input(label='Heart Rate (beats/min)', value=130)
-    input_features["SBP"] = st.sidebar.number_input(label='Systolic Blood Pressure (mmHg)', value=90)
-    input_features["Albumin"] = st.sidebar.number_input(label='Serum Albumin  (g/L)', value=2.30, format="%.2f")
-    input_features["HGB"] = st.sidebar.number_input(label='Hemoglobin level (g/dL)', value=15.00, format="%.2f")
-    input_features["Lymphocyte count"] = st.sidebar.number_input(label='Absolute Lymphocyte Count (10^9/L)', value=0.30, format="%.2f")
-    input_features["SpO2"] = st.sidebar.number_input(label='Blood Oxygen Saturation (%)', value=92)
+    input_features["BUN"] = st.number_input(label='Blood Urea Nitrogen (mg/dL)', value=35)
+    input_features["CRP"] = st.number_input(label='C-reactive Protein (mg/L)', value=40.00, format="%.2f")
+    input_features["RR"] = st.number_input(label='Respiratory Rate (breaths/min)', value=35)
+    input_features["Creatinine"] = st.number_input(label='Serum Creatinine (mg/L)', value=0.50, format="%.2f")
+    input_features["HR"] = st.number_input(label='Heart Rate (beats/min)', value=130)
+    input_features["SBP"] = st.number_input(label='Systolic Blood Pressure (mmHg)', value=90)
+    input_features["Albumin"] = st.number_input(label='Serum Albumin  (g/L)', value=2.30, format="%.2f")
+    input_features["HGB"] = st.number_input(label='Hemoglobin level (g/dL)', value=15.00, format="%.2f")
+    input_features["Lymphocyte count"] = st.number_input(label='Absolute Lymphocyte Count (10^9/L)', value=0.30, format="%.2f")
+    input_features["SpO2"] = st.number_input(label='Blood Oxygen Saturation (%)', value=92)
 #     data={"BUN": 35,
 #           "CRP": 40.00,
 #           "RR": 35,
