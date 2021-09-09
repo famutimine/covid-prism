@@ -70,23 +70,18 @@ if submit:
 	st.header('Model Prediction')
 	st.write("In-Hospital Mortality Probability: ", str(round(float(probability),3)*100) +"%")
 	st.write('---')
-	
-  #explainer force_plot
+	#explainer force_plot
   	p, shap_values = explain_model_prediction(df)
   	st.subheader('Model Prediction Interpretation Plot')
-  	st_shap(p)
-      
+  	st_shap(p)      
   	st.subheader('Summary Plot 1')
   	fig, ax = plt.subplots(nrows=1, ncols=1)
   	shap.summary_plot(shap_values, df)
   	st.pyplot(fig)
-
   	st.subheader('Summary Plot 2')
   	fig, ax = plt.subplots(nrows=1, ncols=1)
   	shap.summary_plot(shap_values, df, plot_type='bar', max_display=10)
-  	st.pyplot(fig)
-
-    
+  	st.pyplot(fig)    
 	st.markdown('''**Disclaimer**: This tool (hereinafter referred to as "COVID-PRISM / Algorithm") is being made publicly available for academic 
 	and research purposes only and is not intended for the diagnosis or treatment of any disease or condition, including COVID-19 in individual patients. 
 	COVID-PRISM is not a substitute for independent clinical assessment or judgement.
