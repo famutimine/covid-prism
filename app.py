@@ -65,7 +65,8 @@ def user_input_features():
 model=XGBClassifier()
 model.fit(X, Y)
 df = user_input_features()
-df = pd.DataFrame(df)
+feature_names= ['BUN', 'CRP', 'RR', 'Creatinine', 'HR', 'SBP', 'Albumin', 'HGB', 'Lymphocyte count', 'SpO2'] 
+df = pd.DataFrame(df,columns = feature_names)
 def st_shap(plot, height=None):
     shap_html = f"<head>{shap.getjs()}</head><body>{plot.html()}</body>"
     components.html(shap_html, height=height)
