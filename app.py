@@ -102,7 +102,7 @@ if submit:
 st.write('---')
 st.markdown('''**Author Information**''')
 st.markdown('''Olubusayo Daniel Famutimi MD, MPH''')
-st.markdown('''email: _famutimio@umsystem.edu_''')
+st.markdown('''email: _famutimio@health.missouri.edu_''')
 hide_footer_style = """
 <style>
 .reportview-container .main footer {visibility: hidden;}    
