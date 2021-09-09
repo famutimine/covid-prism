@@ -25,6 +25,13 @@ import flask
 from flask import Flask, request, redirect, url_for, flash, jsonify, make_response
 
 st.set_page_config(layout="centered")
+hide_streamlit_style = """
+<style>
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+</style>
+"""
+st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 st.markdown('''_A Real Time **COVID**-19 **P**ersonalized **R**isk **I**ntelligence **S**ystem for **M**ortality_.''')
 st.markdown('''**Important Note**: The current model (COVID-PRISM) was developed using data from 1,202 patients hospitalized
 with a diagnosis of COVID-19 at the University of Missouri Healthcare-Columbia during April 1, 2020 through April 30, 2021.
