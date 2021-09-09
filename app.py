@@ -78,7 +78,7 @@ def explain_model_prediction(data):
 
 
 
-submit = st.sidebar.button('Get predictions')
+submit = st.button('Get predictions')
 if submit:
     probability = model.predict_proba(df)[:,1]
     st.header('Model Prediction')
