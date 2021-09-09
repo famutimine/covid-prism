@@ -79,7 +79,7 @@ def explain_model_prediction(data):
 
 submit = st.sidebar.button('Get predictions')
 if submit:
-    probability = model.predict_proba(df)[:, 1]
+    probability = model.predict_proba(df)
     st.header('Model Prediction')
     st.write("In-Hospital Mortality Probability: ", str(round(float(probability),3)*100) +"%")
     st.write('---')
