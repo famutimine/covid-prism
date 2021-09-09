@@ -33,8 +33,8 @@ This threshold was calculated based on the value that optimized sensitivity and 
 This means that any patient with a mortality probability of 12% or higher is considered high risk for mortality within the next 24-48 hours.''')
 
 covid_df=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid_data.csv',index_col=[0])
-X = covid_df.iloc[:, :-1].values
-Y = covid_df.iloc[:, -1].values
+X = covid_df.iloc[:, :-1]
+Y = covid_df.iloc[:, -1]
 st.sidebar.header('Please fill in current values')
 def user_input_features():
     input_features = {}
