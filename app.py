@@ -33,8 +33,8 @@ This threshold was calculated based on the value that optimized sensitivity and 
 This means that any patient with a mortality probability of 12% or higher is considered high risk for mortality within the next 24-48 hours.''')
 
 covid_df=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid_data.csv',index_col=[0])
-X = covid_df.iloc[:, :-1].values
-Y = covid_df.iloc[:, -1].values
+X = covid_df.iloc[:, :-1]
+Y = covid_df.iloc[:, -1]
 st.sidebar.header('Please fill in current values')
 def user_input_features():
     input_features = {}
@@ -48,6 +48,17 @@ def user_input_features():
     input_features["HGB"] = st.sidebar.number_input(label='Hemoglobin level (g/dL)', value=15.00, format="%.2f")
     input_features["Lymphocyte count"] = st.sidebar.number_input(label='Absolute Lymphocyte Count (10^9/L)', value=0.30, format="%.2f")
     input_features["SpO2"] = st.sidebar.number_input(label='Blood Oxygen Saturation (%)', value=92)
+    data={"BUN": 35,
+          "CRP": 40.00,
+          "RR": 35,
+          "Creatinine": 0.50,
+          "HR": 130,
+          "SBP": 90,
+          "Albumin":2.30,
+          "HGB":15.00,
+          "Lymphocyte count": 0.30,
+          "SpO2":92}
+    features=pd.DataFrame(data,index=[0])
     return [input_features]
 
 
