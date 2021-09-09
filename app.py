@@ -24,6 +24,7 @@ import pickle
 import flask
 from flask import Flask, request, redirect, url_for, flash, jsonify, make_response
 
+st.set_page_config(layout="wide")
 st.markdown('''_A Real Time **COVID**-19 **P**ersonalized **R**isk **I**ntelligence **S**ystem for **M**ortality_.''')
 st.markdown('''**Important Note**: The current model (COVID-PRISM) was developed using data from 1,202 patients hospitalized
 with a diagnosis of COVID-19 at the University of Missouri Healthcare-Columbia during April 1, 2020 through April 30, 2021.
@@ -98,9 +99,11 @@ if submit:
     shap.summary_plot(shap_values, df, plot_type='bar', max_display=10)
     st.pyplot(fig)
     st.markdown('''**Disclaimer**: This tool (hereinafter referred to as "COVID-PRISM / Algorithm") is being made publicly available for academic and research purposes only and is not intended for the diagnosis or treatment of any disease or condition, including COVID-19 in individual patients. COVID-PRISM is not a substitute for independent clinical assessment or judgement. All representations and warranties regarding the Algorithm, including warranties of fitness for use in clinical decision making and warranties that the Algorithm works as intended, is clinically safe, does not infringe on third party intellectual property rights, and/or is free from defects and bugs, are hereby disclaimed.''')
-    
-    hide_footer_style = """
-    <style>
-    .reportview-container .main footer {visibility: hidden;}    
-    """
-    st.markdown(hide_footer_style, unsafe_allow_html=True)
+st.write('---')
+st.markdown('''**Author:** Olubusayo Daniel Famutimi MD, MPH \
+email: famutimio@umsystem.edu''')
+hide_footer_style = """
+<style>
+.reportview-container .main footer {visibility: hidden;}    
+"""
+st.markdown(hide_footer_style, unsafe_allow_html=True)
