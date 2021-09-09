@@ -23,6 +23,7 @@ from sklearn.metrics import roc_auc_score, accuracy_score
 import pickle
 import flask
 from flask import Flask, request, redirect, url_for, flash, jsonify, make_response
+from PIL import Image
 
 st.set_page_config(layout="centered")
 hide_streamlit_style = """
@@ -31,7 +32,8 @@ hide_streamlit_style = """
 footer {visibility: hidden;}
 </style>
 """
-st.image("https://imgur.com/a/IU1vq00",width=400)
+image = Image.open(' https://raw.githubusercontent.com/famutimine/covid-prism/main/covid.jpg')
+st.image(image)
 st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 st.markdown('''_A Real Time **COVID**-19 **P**ersonalized **R**isk **I**ntelligence **S**ystem for **M**ortality_.''')
 st.markdown('''**Important Note**: The current model (COVID-PRISM) was developed using data from 1,202 patients hospitalized
