@@ -33,57 +33,56 @@ This threshold was calculated based on the value that optimized sensitivity and 
 This means that any patient with a mortality probability of 12% or higher is considered high risk for mortality within the next 24-48 hours.''')
 
 covid_df=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid_data.csv?token=AO5BWISYPRFU6X5BIV3YDTTBHGPQE',index_col=[0])
-X = df.iloc[:, :-1]
-Y = df.iloc[:, -1]
+X = covid_df.iloc[:, :-1]
+Y = covid_df.iloc[:, -1]
 st.sidebar.header('Please fill in current values')
 def user_input_features():
-	input_features = {}
-	input_features["BUN"] = st.sidebar.number_input(label='Blood Urea Nitrogen (mg/dL)', value=35)
-	input_features["CRP"] = st.sidebar.number_input(label='C-reactive Protein (mg/L)', value=40.00, format="%.2f")    
-	input_features["RR"] = st.sidebar.number_input(label='Respiratory Rate (breaths/min)', value=35)
-	input_features["Creatinine"] = st.sidebar.number_input(label='Serum Creatinine (mg/L)', value=0.50, format="%.2f")
-	input_features["HR"] = st.sidebar.number_input(label='Heart Rate (beats/min)', value=130)    
-	input_features["SBP"] = st.sidebar.number_input(label='Systolic Blood Pressure (mmHg)', value=90)
-	input_features["Albumin"] = st.sidebar.number_input(label='Serum Albumin  (g/L)', value=2.30, format="%.2f")    
-	input_features["HGB"] = st.sidebar.number_input(label='Hemoglobin level (g/dL)', value=15.00, format="%.2f")
-	input_features["Lymphocyte count"] = st.sidebar.number_input(label='Absolute Lymphocyte Count (10^9/L)', value=0.30, format="%.2f")
-	input_features["SpO2"] = st.sidebar.number_input(label='Blood Oxygen Saturation (%)', value=92)    
-	return [input_features]
-    
-def st_shap(plot, height=None):
-	shap_html = f"<head>{shap.getjs()}</head><body>{plot.html()}</body>"
-	components.html(shap_html, height=height)
-def explain_model_prediction(data):
-	# Calculate Shap values
-	shap_values = explainer.shap_values(data)
-	p = shap.force_plot(explainer.expected_value, shap_values, data)
-	return p, shap_values
-	
-df = user_input_features()
+    input_features = {}
+    input_features["BUN"] = st.sidebar.number_input(label='Blood Urea Nitrogen (mg/dL)', value=35)
+    input_features["CRP"] = st.sidebar.number_input(label='C-reactive Protein (mg/L)', value=40.00, format="%.2f")
+    input_features["RR"] = st.sidebar.number_input(label='Respiratory Rate (breaths/min)', value=35)
+    input_features["Creatinine"] = st.sidebar.number_input(label='Serum Creatinine (mg/L)', value=0.50, format="%.2f")
+    input_features["HR"] = st.sidebar.number_input(label='Heart Rate (beats/min)', value=130)
+    input_features["SBP"] = st.sidebar.number_input(label='Systolic Blood Pressure (mmHg)', value=90)
+    input_features["Albumin"] = st.sidebar.number_input(label='Serum Albumin  (g/L)', value=2.30, format="%.2f")
+    input_features["HGB"] = st.sidebar.number_input(label='Hemoglobin level (g/dL)', value=15.00, format="%.2f")
+    input_features["Lymphocyte count"] = st.sidebar.number_input(label='Absolute Lymphocyte Count (10^9/L)', value=0.30, format="%.2f")
+    input_features["SpO2"] = st.sidebar.number_input(label='Blood Oxygen Saturation (%)', value=92)
+    return [input_features]
+
+
 model=XGBClassifier()
 model.fit(X, Y)
+df = user_input_features()
+
+def st_shap(plot, height=None):
+    shap_html = f"<head>{shap.getjs()}</head><body>{plot.html()}</body>"
+    components.html(shap_html, height=height)
+def explain_model_prediction(data):
+    explainer = shap.TreeExplainer(model)
+    shap_values = explainer.shap_values(data)
+    p = shap.force_plot(explainer.expected_value, shap_values, data)
+    return p, shap_values
+
+
 
 submit = st.sidebar.button('Get predictions')
 if submit:
-	# Apply Model to Make Prediction
-	probability = model.predict_proba(df)[:, 1]
-	st.header('Model Prediction')
-	st.write("In-Hospital Mortality Probability: ", str(round(float(probability),3)*100) +"%")
-	st.write('---')
-	#explainer force_plot
-  	p, shap_values = explain_model_prediction(df)
-  	st.subheader('Model Prediction Interpretation Plot')
-  	st_shap(p)      
-  	st.subheader('Summary Plot 1')
-  	fig, ax = plt.subplots(nrows=1, ncols=1)
-  	shap.summary_plot(shap_values, df)
-  	st.pyplot(fig)
-  	st.subheader('Summary Plot 2')
-  	fig, ax = plt.subplots(nrows=1, ncols=1)
-  	shap.summary_plot(shap_values, df, plot_type='bar', max_display=10)
-  	st.pyplot(fig)    
-	st.markdown('''**Disclaimer**: This tool (hereinafter referred to as "COVID-PRISM / Algorithm") is being made publicly available for academic 
-	and research purposes only and is not intended for the diagnosis or treatment of any disease or condition, including COVID-19 in individual patients. 
-	COVID-PRISM is not a substitute for independent clinical assessment or judgement.
-	All representations and warranties regarding the Algorithm, including warranties of fitness for use in clinical decision making and warranties that the Algorithm works as intended, 
-	is clinically safe, does not infringe on third party intellectual property rights, and/or is free from defects and bugs, are hereby disclaimed.''')
+    probability = model.predict_proba(df)[:, 1]
+    st.header('Model Prediction')
+    st.write("In-Hospital Mortality Probability: ", str(round(float(probability),3)*100) +"%")
+    st.write('---')
+
+    p,shap_values = explain_model_prediction(df)
+    st.subheader('Model Prediction Interpretation Plot')
+    st_shap(p)
+    
+    st.subheader('Summary Plot 1')
+    fig, ax = plt.subplots(nrows=1, ncols=1)
+    shap.summary_plot(shap_values, df)
+    st.pyplot(fig)
+    st.subheader('Summary Plot 2')
+    fig, ax = plt.subplots(nrows=1, ncols=1)
+    shap.summary_plot(shap_values, df, plot_type='bar', max_display=10)
+    st.pyplot(fig)
+    st.markdown('''**Disclaimer**: This tool (hereinafter referred to as "COVID-PRISM / Algorithm") is being made publicly available for academic and research purposes only and is not intended for the diagnosis or treatment of any disease or condition, including COVID-19 in individual patients. COVID-PRISM is not a substitute for independent clinical assessment or judgement. All representations and warranties regarding the Algorithm, including warranties of fitness for use in clinical decision making and warranties that the Algorithm works as intended, is clinically safe, does not infringe on third party intellectual property rights, and/or is free from defects and bugs, are hereby disclaimed.''')
