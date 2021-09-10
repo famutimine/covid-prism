@@ -45,7 +45,7 @@ A probability threshold value of 12% has been determined to be highly predictive
 This threshold was calculated based on the value that optimized sensitivity and specificity of the model.
 This means that any patient with a mortality probability of 12% or higher is considered high risk for mortality within the next 24-48 hours.''')
 
-covid_df=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid_data.csv',index_col=[0])
+covid_df=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid_dataset.csv',index_col=[0])
 X = covid_df.iloc[:, :-1]
 Y = covid_df.iloc[:, -1]
 st.header('Please fill in current values')
