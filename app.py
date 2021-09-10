@@ -32,7 +32,7 @@ hide_streamlit_style = """
 footer {visibility: hidden;}
 </style>
 """
-image = Image.open(' https://raw.githubusercontent.com/famutimine/covid-prism/main/covid.jpg')
+image = Image.open('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid.jpg')
 st.image(image)
 st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 st.markdown('''_A Real Time **COVID**-19 **P**ersonalized **R**isk **I**ntelligence **S**ystem for **M**ortality_.''')
