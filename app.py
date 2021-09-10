@@ -51,16 +51,16 @@ Y = covid_df.iloc[:, -1]
 st.header('Please fill in current values')
 def user_input_features():
     input_features = {}
-    input_features["BUN"] = st.number_input(label='Blood Urea Nitrogen (mg/dL)', value=35)
-    input_features["CRP"] = st.number_input(label='C-reactive Protein (mg/L)', value=40.00, format="%.2f")
-    input_features["RR"] = st.number_input(label='Respiratory Rate (breaths/min)', value=35)
-    input_features["Creatinine"] = st.number_input(label='Serum Creatinine (mg/L)', value=0.50, format="%.2f")
-    input_features["HR"] = st.number_input(label='Heart Rate (beats/min)', value=130)
-    input_features["SBP"] = st.number_input(label='Systolic Blood Pressure (mmHg)', value=90)
+    input_features["BUN"] = st.number_input(label='Blood Urea Nitrogen (mg/dL)', value=33)
+    input_features["CRP"] = st.number_input(label='C-reactive Protein (mg/L)', value=32.33, format="%.2f")
+    input_features["RR"] = st.number_input(label='Respiratory Rate (breaths/min)', value=16)
+    input_features["Creatinine"] = st.number_input(label='Serum Creatinine (mg/L)', value=0.83, format="%.2f")
+    input_features["HR"] = st.number_input(label='Heart Rate (beats/min)', value=101)
+    input_features["SBP"] = st.number_input(label='Systolic Blood Pressure (mmHg)', value=132)
     input_features["Albumin"] = st.number_input(label='Serum Albumin  (g/L)', value=2.30, format="%.2f")
-    input_features["HGB"] = st.number_input(label='Hemoglobin level (g/dL)', value=15.00, format="%.2f")
+    input_features["HGB"] = st.number_input(label='Hemoglobin level (g/dL)', value=8.00, format="%.2f")
     input_features["Lymphocyte count"] = st.number_input(label='Absolute Lymphocyte Count (10^9/L)', value=0.30, format="%.2f")
-    input_features["SpO2"] = st.number_input(label='Blood Oxygen Saturation (%)', value=92)
+    input_features["SpO2"] = st.number_input(label='Blood Oxygen Saturation (%)', value=89)
     return [input_features]
 
 model=XGBClassifier()
