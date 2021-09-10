@@ -47,7 +47,7 @@ This means that any patient with a mortality probability of 12% or higher is con
 
 covid_df=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid_dataset.csv',index_col=[0])
 X = covid_df.iloc[:, :-1]
-Y = covid_df.iloc[:, -1]
+Y = covid_df.iloc[:, -1:]
 st.header('Please fill in current values')
 def user_input_features():
     input_features = {}
