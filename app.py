@@ -99,9 +99,10 @@ if submit:
     fig, ax = plt.subplots(nrows=1, ncols=1)
     shap.summary_plot(shap_values, df, plot_type='bar', max_display=10)
     st.pyplot(fig)
+    st.write('---')
     st.markdown('''**Disclaimer**: This tool (hereinafter referred to as "COVID-PRISM / Algorithm") is being made publicly available for academic and research purposes only and is not intended for the diagnosis or treatment of any disease or condition, including COVID-19 in individual patients. COVID-PRISM is not a substitute for independent clinical assessment or judgement. All representations and warranties regarding the Algorithm, including warranties of fitness for use in clinical decision making and warranties that the Algorithm works as intended, is clinically safe, does not infringe on third party intellectual property rights, and/or is free from defects and bugs, are hereby disclaimed.''')
 st.write('---')
-st.markdown('''**Author Information**''')
+st.markdown('''**Developer/Author Information**''')
 st.markdown('''Olubusayo Daniel Famutimi MD, MPH''')
 st.markdown('''email: _famutimio@health.missouri.edu_''')
 hide_footer_style = """
