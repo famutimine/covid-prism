@@ -48,6 +48,8 @@ This means that any patient with a mortality probability of 12% or higher is con
 covid_df=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid_dataset.csv',index_col=[0])
 X = covid_df.iloc[:, :-1]
 Y = covid_df.iloc[:, -1:]
+model=XGBClassifier()
+model.fit(X, Y)
 st.header('Please fill in current values')
 def user_input_features():
     input_features = {}
@@ -58,13 +60,11 @@ def user_input_features():
     input_features["HR"] = st.number_input(label='Heart Rate (beats/min)', value=101)
     input_features["SBP"] = st.number_input(label='Systolic Blood Pressure (mmHg)', value=132)
     input_features["Albumin"] = st.number_input(label='Serum Albumin  (g/L)', value=2.30, format="%.2f")
-    input_features["HGB"] = st.number_input(label='Hemoglobin level (g/dL)', value=8.00, format="%.2f")
+    input_features["HGB"] = st.number_input(label='Hemoglobin level (g/dL)', value=8)
     input_features["Lymphocyte count"] = st.number_input(label='Absolute Lymphocyte Count (10^9/L)', value=0.30, format="%.2f")
     input_features["SpO2"] = st.number_input(label='Blood Oxygen Saturation (%)', value=89)
     return [input_features]
 
-model=XGBClassifier()
-model.fit(X, Y)
 df = user_input_features()
 feature_names= ['BUN', 'CRP', 'RR', 'Creatinine', 'HR', 'SBP', 'Albumin', 'HGB', 'Lymphocyte count', 'SpO2'] 
 df = pd.DataFrame(df,columns = feature_names)
