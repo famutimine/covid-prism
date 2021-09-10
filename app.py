@@ -24,6 +24,7 @@ import pickle
 import flask
 from flask import Flask, request, redirect, url_for, flash, jsonify, make_response
 from PIL import Image
+from io import BytesIO
 
 st.set_page_config(layout="centered")
 hide_streamlit_style = """
@@ -32,7 +33,8 @@ hide_streamlit_style = """
 footer {visibility: hidden;}
 </style>
 """
-image = Image.open('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid.jpg')
+response = requests.get('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid.jpg')
+image = Image.open(BytesIO(response.content))
 st.image(image)
 st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 st.markdown('''_A Real Time **COVID**-19 **P**ersonalized **R**isk **I**ntelligence **S**ystem for **M**ortality_.''')
