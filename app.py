@@ -63,7 +63,6 @@ def user_input_features():
     input_features["SpO2"] = st.number_input(label='Blood Oxygen Saturation (%)', value=92)
     return [input_features]
 
-
 model=XGBClassifier()
 model.fit(X, Y)
 df = user_input_features()
@@ -77,8 +76,6 @@ def explain_model_prediction(data):
     shap_values = explainer.shap_values(data)
     p = shap.force_plot(explainer.expected_value, shap_values, data)
     return p, shap_values
-
-
 
 submit = st.button('Get predictions')
 if submit:
