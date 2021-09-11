@@ -80,7 +80,7 @@ submit = st.button('Get predictions')
 if submit:
     probability = model.predict_proba(df)[:,1]
     st.header('Model Prediction')
-    st.write("In-Hospital Mortality Probability: ", str(round(float(probability),3)*100) +"%")
+    st.write("In-Hospital Mortality Probability: ", str(round(float(probability),2)*100) +"%")
     st.write('---')
 
     p,shap_values = explain_model_prediction(df.iloc[0])
