@@ -99,7 +99,7 @@ if submit:
     fig, ax = plt.subplots(nrows=1, ncols=1)
     shap.summary_plot(shap_values, df, plot_type='bar', max_display=10)
     st.pyplot(fig)
-    st.write('''Variables on the right of the vertical line (x=0) have positive impact on prediction (increases probability) while variables on the left have negative impact'''
+    st.write('''Variables on the right of the vertical line (at x=0) have positive impact on prediction (increases probability) while variables on the left have negative impact''')
     st.write('---')
     st.markdown('''**Disclaimer**: This tool (hereinafter referred to as "COVID-PRISM / Algorithm") is being made publicly available for academic and research purposes only and is not intended for the diagnosis or treatment of any disease or condition, including COVID-19 in individual patients. COVID-PRISM is not a substitute for independent clinical assessment or judgement. All representations and warranties regarding the Algorithm, including warranties of fitness for use in clinical decision making and warranties that the Algorithm works as intended, is clinically safe, does not infringe on third party intellectual property rights, and/or is free from defects and bugs, are hereby disclaimed.''')
 st.write('---')
