@@ -38,8 +38,8 @@ image = Image.open(BytesIO(response.content))
 st.image(image)
 st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 st.markdown('''_A Real Time **COVID**-19 **P**ersonalized **R**isk **I**ntelligence **S**ystem for **M**ortality (COVID-PRISM)_.''')
-st.markdown('''**Important Note**: The current model (COVID-PRISM) was developed using data from 1,202 patients hospitalized with a diagnosis of COVID-19 at the University of Missouri Healthcare-Columbia during April 1, 2020 through April 30, 2021.
-COVID-PRISM has been internally validated to predict 24-48 hour mortality risk and has an area under the receiver operating characteristic curve (AUROC) of 0.93, sensitivity of 95% and specificity of 75%.''')
+st.markdown('''**Important Note**: COVID-PRISM was developed using data from 1,202 patients hospitalized with a diagnosis of COVID-19 at the University of Missouri Healthcare-Columbia during April 1, 2020 through April 30, 2021.
+This tool has been internally validated to predict 24-48 hour mortality risk and has an area under the receiver operating characteristic curve (AUROC) of 0.93, sensitivity of 95% and specificity of 75%.''')
 covid_df=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid_dataset.csv',index_col=[0])
 covid_df=covid_df.drop(['HGB','Creatinine'],axis=1)
 X = covid_df.iloc[:, :-1]
