@@ -75,7 +75,7 @@ def explain_model_prediction(data):
     explainer = shap.TreeExplainer(model)
     shap_values_Model = explainer.shap_values(data)
     p = shap.force_plot(explainer.expected_value, shap_values_Model, data)
-    return p, shap_values_Model
+    return p, shap_values
 
 submit = st.button('Get predictions')
 if submit:
