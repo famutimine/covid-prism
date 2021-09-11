@@ -88,7 +88,7 @@ if submit:
     st_shap(p)
     explainer = shap.TreeExplainer(model)
     shap_values = explainer.shap_values(df.iloc[0])
-    st.write(explainer.expected_value[0] + shap_values[0].sum())
+    st.write(explainer.expected_value + shap_values[0].sum())
         
     st.subheader('Summary Plot 1')
     fig, ax = plt.subplots(nrows=1, ncols=1)
