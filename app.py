@@ -41,9 +41,6 @@ st.markdown('''_A Real Time **COVID**-19 **P**ersonalized **R**isk **I**ntellige
 st.markdown('''**Important Note**: The current model (COVID-PRISM) was developed using data from 1,202 patients hospitalized
 with a diagnosis of COVID-19 at the University of Missouri Healthcare-Columbia during April 1, 2020 through April 30, 2021.
 COVID-PRISM has been internally validated to predict 24-48 hour mortality risk and has an area under the receiver operating characteristic curve (AUROC) of 0.93, sensitivity of 95% and specificity of 75%.'''
-#A probability threshold value of 12% has been determined to be highly predictive of mortality in the study population.
-#This threshold was calculated based on the value that optimized sensitivity and specificity of the model.
-#This means that any patient with a mortality probability of 12% or higher is considered high risk for mortality within the next 24-48 hours
 
 covid_df=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid_dataset.csv',index_col=[0])
 covid_df=covid_df.drop(['HGB','Creatinine'],axis=1)
