@@ -65,7 +65,7 @@ def user_input_features():
     return [input_features]
 
 df = user_input_features()
-feature_names= ['BUN', 'CRP', 'RR', 'Creatinine', 'HR', 'SBP', 'Albumin', 'Lymphocyte count', 'SpO2'] 
+feature_names= ['BUN', 'CRP', 'RR', 'HR', 'SBP', 'Albumin', 'Lymphocyte count', 'SpO2'] 
 df = pd.DataFrame(df,columns = feature_names)
 def st_shap(plot, height=None):
     shap_html = f"<head>{shap.getjs()}</head><body>{plot.html()}</body>"
