@@ -46,7 +46,7 @@ This threshold was calculated based on the value that optimized sensitivity and 
 This means that any patient with a mortality probability of 12% or higher is considered high risk for mortality within the next 24-48 hours.''')
 
 covid_df=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid_dataset.csv',index_col=[0])
-covid_df.drop('HGB',axis=1)
+covid_df=covid_df.drop('HGB',axis=1)
 X = covid_df.iloc[:, :-1]
 Y = covid_df.iloc[:, -1:]
 model=XGBClassifier()
@@ -61,7 +61,6 @@ def user_input_features():
     input_features["HR"] = st.number_input(label='Heart Rate (beats/min)', value=101)
     input_features["SBP"] = st.number_input(label='Systolic Blood Pressure (mmHg)', value=132)
     input_features["Albumin"] = st.number_input(label='Serum Albumin (g/L)', value=2.30, format="%.2f")
-    #input_features["HGB"] = st.number_input(label='Hemoglobin level (g/dL)', value=8.0)
     input_features["Lymphocyte count"] = st.number_input(label='Absolute Lymphocyte Count (10^9/L)', value=0.30, format="%.2f")
     input_features["SpO2"] = st.number_input(label='Blood Oxygen Saturation (%)', value=89)
     return [input_features]
