@@ -89,7 +89,7 @@ if submit:
     explainer = shap.TreeExplainer(model)
     shap_values = explainer.shap_values(df.iloc[0])
     # st.write(explainer.expected_value + shap_values[0].sum()) # Model Output Calculation
-    st.write('''The variables in red increased the prediction while variables in blue decreased prediction for this patient. Please hover on the unlabelled arrow bands for visibility''')
+    st.write('''Variables in red increased the prediction while variables in blue decreased prediction for this patient. Please hover on unlabelled arrow bands for visibility''')
         
     st.subheader('Variable Impact on Model Prediction')
     fig, ax = plt.subplots(nrows=1, ncols=1)
