@@ -86,6 +86,7 @@ if submit:
     p,shap_values = explain_model_prediction(df.iloc[0])
     st.subheader('Model Prediction Interpretation Plot')
     st_shap(p)
+    st.write(explainer.expected_value[0] + shap_values[0][Index].sum())
         
     st.subheader('Summary Plot 1')
     fig, ax = plt.subplots(nrows=1, ncols=1)
