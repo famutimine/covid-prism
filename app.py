@@ -59,8 +59,8 @@ def user_input_features():
     input_features["Creatinine"] = st.number_input(label='Serum Creatinine (mg/L)', value=0.83, format="%.2f")
     input_features["HR"] = st.number_input(label='Heart Rate (beats/min)', value=101)
     input_features["SBP"] = st.number_input(label='Systolic Blood Pressure (mmHg)', value=132)
-    input_features["Albumin"] = st.number_input(label='Serum Albumin  (g/L)', value=2.30, format="%.2f")
-    input_features["HGB"] = st.number_input(label='Hemoglobin level (g/dL)', value=8)
+    input_features["Albumin"] = st.number_input(label='Serum Albumin (g/L)', value=2.30, format="%.2f")
+    input_features["HGB"] = st.number_input(label='Hemoglobin level (g/dL)', value=8.0)
     input_features["Lymphocyte count"] = st.number_input(label='Absolute Lymphocyte Count (10^9/L)', value=0.30, format="%.2f")
     input_features["SpO2"] = st.number_input(label='Blood Oxygen Saturation (%)', value=89)
     return [input_features]
@@ -84,7 +84,7 @@ if submit:
     st.write("In-Hospital Mortality Probability: ", str(round(float(probability),3)*100) +"%")
     st.write('---')
 
-    p,shap_values = explain_model_prediction(df)
+    p,shap_values = explain_model_prediction(df.iloc[0])
     st.subheader('Model Prediction Interpretation Plot')
     st_shap(p)
     
