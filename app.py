@@ -33,7 +33,7 @@ hide_streamlit_style = """
 footer {visibility: hidden;}
 </style>
 """
-st.markdown("<h1 style='text-align: center; color: red;'>COVID-PRISM</h1>", unsafe_allow_html=True)
+#st.markdown("<h1 style='text-align: center; color: red;'>COVID-PRISM</h1>", unsafe_allow_html=True)
 response = requests.get('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid.jpg')
 image = Image.open(BytesIO(response.content))
 st.image(image)
