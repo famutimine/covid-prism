@@ -47,7 +47,7 @@ X = covid_df.iloc[:, :-1]
 Y = covid_df.iloc[:, -1:]
 model=XGBClassifier()
 model.fit(X, Y)
-st.header('Please fill in the most recent values within the last 24 hours')
+st.header('Enter the most recent values within the last 24 hours')
 def user_input_features():
     input_features = {}
     input_features["BUN"] = st.number_input(label='Blood Urea Nitrogen (mg/dL)', value=33)
