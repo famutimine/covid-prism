@@ -39,7 +39,7 @@ image = Image.open(BytesIO(response.content))
 st.image(image)
 st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 st.markdown('''_A Real Time **COVID**-19 **P**ersonalized **R**isk **I**ntelligence **S**ystem for **M**ortality (COVID-PRISM)_.''')
-st.markdown('''**Important Note**: COVID-PRISM is artificial intelligence-based prognostic model developed using data from 1,917 patients hospitalized with a diagnosis of COVID-19 at the University of Missouri Healthcare-Columbia during April 1, 2020 through April 30, 2021.
+st.markdown('''**Important Note**: COVID-PRISM is artificial intelligence-based prognostic model developed using data from 1,917 patients hospitalized with a diagnosis of COVID-19 at the University of Missouri Healthcare-Columbia during April 1, 2020 through November 30, 2021.
 This model has been internally validated to predict 24-48 hour inpatient mortality risk with an area under the receiver operating characteristic curve (AUROC) of 0.97, sensitivity of 89% and specificity of 94%.''')
 st.write('---')
 st.markdown('''**Disclaimer**: This tool (hereinafter referred to as "COVID-PRISM / Algorithm") is being made publicly available for academic and research purposes only and is not intended for the diagnosis or treatment of any disease or condition, including COVID-19 in individual patients. COVID-PRISM is not a substitute for independent clinical assessment or judgement. All representations and warranties regarding the Algorithm, including warranties of fitness for use in clinical decision making and warranties that the Algorithm works as intended, is clinically safe, does not infringe on third party intellectual property rights, and/or is free from defects and bugs, are hereby disclaimed.''')
@@ -52,7 +52,7 @@ st.header('Enter the most recent values within the last 24 hours')
 def user_input_features():
     input_features = {}
     input_features["Albumin"] = st.number_input(label='Serum Albumin (g/L)', value=3.20, format="%.2f")
-    input_features["BUN"] = st.number_input(label='Blood Urea Nitrogen (mg/dL)', value=23, format="%.2f") 
+    input_features["BUN"] = st.number_input(label='Blood Urea Nitrogen (mg/dL)', value=23.00, format="%.2f") 
     input_features["SpO2_FiO2_Ratio"] = st.number_input(label='SpO2:FiO2 Ratio', value=180)
     input_features["Respiratory_Rate"] = st.number_input(label='Respiratory Rate (breaths/min)', value=42) 
     input_features["HGB"] = st.number_input(label='Hemoglobin Level (g/dL)', value=12.7)
@@ -75,7 +75,7 @@ if submit:
     explainer = shap.TreeExplainer(model)
     shap_values = explainer.shap_values(df.iloc[0])
     fig, ax = plt.subplots(nrows=1, ncols=1)
-    shap.plots.waterfall(shap_values,df)
+    shap.plots.waterfall(shap_values)
     st.pyplot(fig)
     st.write('''Variables in red increased the prediction while variables in blue decreased prediction for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
         
