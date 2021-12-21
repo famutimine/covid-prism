@@ -75,7 +75,7 @@ if submit:
     explainer = shap.TreeExplainer(model)
     shap_values = explainer.shap_values(df.iloc[0])
     fig, ax = plt.subplots(nrows=1, ncols=1)
-    shap.plots.waterfall(shap_values)
+    shap.plots.waterfall(shap_values[0])
     st.pyplot(fig)
     st.write('''Variables in red increased the prediction while variables in blue decreased prediction for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
         
