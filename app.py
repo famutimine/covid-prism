@@ -69,14 +69,14 @@ submit = st.button('Get predictions')
 if submit:
     probability = model.predict_proba(df)[:,1]
     st.header('Model Prediction')
-    st.write("Risk of Severe Illness or In-Hospital Mortality: ", str(round(float(probability),2)*100) +"%")
+    st.write("Risk of Severe Illness or In-Hospital Mortality: ", str(round(float(probability*100)),1) +"%")
     st.write('---')
     
     st.subheader('SHAP Waterfall Plot for Model Explanation and Interpretation')
     explainer = shap.Explainer(model,X)
     shap_values = explainer.shap_values(df.iloc[0])
     fig, ax = plt.subplots(nrows=1, ncols=1)
-    shap.waterfall_plot(explainer.expected_value, shap_values, df.iloc[0], max_display=8)    
+    shap.waterfall_plot(explainer.expected_value, shap_values, df.iloc[0])    
     st.pyplot(fig)
     st.write('''Variables corresponding to the red arrow increased the prediction while variables corresponding to the blue arrow decreased prediction for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
         
