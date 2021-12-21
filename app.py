@@ -76,7 +76,7 @@ if submit:
     explainer = shap.Explainer(model,X)
     shap_values = explainer.shap_values(df.iloc[0])
     fig, ax = plt.subplots()
-    shap.plots._waterfall.waterfall_legacy(explainer.expected_value,shap_values,feature_names=feature_names,values=df.values) 
+    shap.plots._waterfall.waterfall_legacy(explainer.expected_value,shap_values,feature_names=feature_names) 
     st.pyplot(fig)
     st.write('''Variables corresponding to the red arrow increased the prediction while variables corresponding to the blue arrow decreased prediction for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
         
