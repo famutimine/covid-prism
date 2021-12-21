@@ -41,8 +41,9 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 st.markdown('''_A Real Time **COVID**-19 **P**ersonalized **R**isk **I**ntelligence **S**ystem for **M**ortality (COVID-PRISM)_.''')
 st.markdown('''**Important Note**: COVID-PRISM is artificial intelligence-based prognostic model developed using data from 1,202 patients hospitalized with a diagnosis of COVID-19 at the University of Missouri Healthcare-Columbia during April 1, 2020 through April 30, 2021.
 This model has been internally validated to predict 24-48 hour inpatient mortality risk with an area under the receiver operating characteristic curve (AUROC) of 0.92, sensitivity of 93.2% and specificity of 84.4%.''')
-covid_df=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid_dataset.csv',index_col=[0])
-covid_df=covid_df.drop(['HGB','Creatinine'],axis=1)
+st.write('---')
+st.markdown('''**Disclaimer**: This tool (hereinafter referred to as "COVID-PRISM / Algorithm") is being made publicly available for academic and research purposes only and is not intended for the diagnosis or treatment of any disease or condition, including COVID-19 in individual patients. COVID-PRISM is not a substitute for independent clinical assessment or judgement. All representations and warranties regarding the Algorithm, including warranties of fitness for use in clinical decision making and warranties that the Algorithm works as intended, is clinically safe, does not infringe on third party intellectual property rights, and/or is free from defects and bugs, are hereby disclaimed.''')
+covid_df=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid19_data.csv',index_col=[0])
 X = covid_df.iloc[:, :-1]
 Y = covid_df.iloc[:, -1:]
 model=XGBClassifier()
@@ -50,56 +51,34 @@ model.fit(X, Y)
 st.header('Enter the most recent values within the last 24 hours')
 def user_input_features():
     input_features = {}
-    input_features["BUN"] = st.number_input(label='Blood Urea Nitrogen (mg/dL)', value=33)
-    input_features["CRP"] = st.number_input(label='C-reactive Protein (mg/L)', value=32.33, format="%.2f")
-    input_features["RR"] = st.number_input(label='Respiratory Rate (breaths/min)', value=16)
-    input_features["HR"] = st.number_input(label='Heart Rate (beats/min)', value=101)
-    input_features["SBP"] = st.number_input(label='Systolic Blood Pressure (mmHg)', value=132)
-    input_features["Albumin"] = st.number_input(label='Serum Albumin (g/L)', value=2.30, format="%.2f")
-    input_features["Lymphocyte count"] = st.number_input(label='Absolute Lymphocyte Count (10^9/L)', value=0.30, format="%.2f")
-    input_features["SpO2"] = st.number_input(label='Blood Oxygen Saturation (%)', value=89)
+    input_features["SpO2_FiO2_Ratio"] = st.number_input(label='SpO2:FiO2 Ratio', value=180)
+    input_features["Respiratory_Rate"] = st.number_input(label='Respiratory Rate (breaths/min)', value=42)
+    input_features["Heart_Rate"] = st.number_input(label='Heart Rate (beats/min)', value=118)
+    input_features["Albumin"] = st.number_input(label='Serum Albumin (g/L)', value=3.20, format="%.2f")    
+    input_features["SBP"] = st.number_input(label='Systolic Blood Pressure (mmHg)', value=164)
+    input_features["BUN"] = st.number_input(label='Blood Urea Nitrogen (mg/dL)', value=23, format="%.2f")    
+    input_features["HGB"] = st.number_input(label='Hemoglobin Level (g/dL)', value=12.7)
     return [input_features]
 
 df = user_input_features()
-feature_names= ['BUN', 'CRP', 'RR', 'HR', 'SBP', 'Albumin', 'Lymphocyte count', 'SpO2'] 
+feature_names= ['SpO2_FiO2_Ratio', 'Respiratory_Rate', 'Heart_Rate', 'Albumin', 'SBP', 'BUN', 'HGB'] 
 df = pd.DataFrame(df,columns = feature_names)
-def st_shap(plot, height=None):
-    shap_html = f"<head>{shap.getjs()}</head><body>{plot.html()}</body>"
-    components.html(shap_html, height=height)
-def explain_model_prediction(data):
-    explainer = shap.TreeExplainer(model)
-    shap_values = explainer.shap_values(data)
-    p = shap.force_plot(explainer.expected_value, shap_values, data)
-    return p, shap_values
+
 
 submit = st.button('Get predictions')
 if submit:
     probability = model.predict_proba(df)[:,1]
     st.header('Model Prediction')
-    st.write("In-Hospital Mortality Probability: ", str(round(float(probability),2)*100) +"%")
+    st.write("Risk of Severe Illness or In-Hospital Mortality: ", str(round(float(probability),2)*100) +"%")
     st.write('---')
-
-    p,shap_values = explain_model_prediction(df.iloc[0])
-    st.subheader('Model Prediction Interpretation Plot')
-    st_shap(p)
+    
     explainer = shap.TreeExplainer(model)
     shap_values = explainer.shap_values(df.iloc[0])
-    # st.write(explainer.expected_value + shap_values[0].sum()) # Model Output Calculation
-    st.write('''Variables in red increased the prediction while variables in blue decreased prediction for this patient. Please hover on unlabelled arrow bands for visibility''')
+    fig, ax = plt.subplots(nrows=1, ncols=1)
+    shap.plots.waterfall(shap_values,df)
+    st.pyplot(fig)
+    st.write('''Variables in red increased the prediction while variables in blue decreased prediction for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
         
-    st.subheader('Variable Impact on Model Prediction')
-    fig, ax = plt.subplots(nrows=1, ncols=1)
-    shap.summary_plot(shap_values, df)
-    st.pyplot(fig)
-    st.write('''Variables on the right of the vertical line (at x=0) have positive impact on prediction (increases probability) while variables on the left have negative impact''')
-    
-    st.subheader('Variable Importance Plot')
-    fig, ax = plt.subplots(nrows=1, ncols=1)
-    shap.summary_plot(shap_values, df, plot_type='bar', max_display=10)
-    st.pyplot(fig)
-    
-    st.write('---')
-    st.markdown('''**Disclaimer**: This tool (hereinafter referred to as "COVID-PRISM / Algorithm") is being made publicly available for academic and research purposes only and is not intended for the diagnosis or treatment of any disease or condition, including COVID-19 in individual patients. COVID-PRISM is not a substitute for independent clinical assessment or judgement. All representations and warranties regarding the Algorithm, including warranties of fitness for use in clinical decision making and warranties that the Algorithm works as intended, is clinically safe, does not infringe on third party intellectual property rights, and/or is free from defects and bugs, are hereby disclaimed.''')
 st.write('---')
 st.markdown('''**Developer/Author Information**''')
 st.markdown('''Olubusayo Daniel Famutimi, MD, MPH''')
