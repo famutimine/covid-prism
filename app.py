@@ -69,7 +69,7 @@ submit = st.button('Get predictions')
 if submit:
     probability = model.predict_proba(df)[:,1]
     st.header('Model Prediction')
-    st.write("Risk of Severe Illness or In-Hospital Mortality: ", str(round(float(probability*100)),1) +"%")
+    st.write("Risk of Severe Illness or In-Hospital Mortality: ", str(round(float(probability*100),1)) +"%")
     st.write('---')
     
     st.subheader('SHAP Waterfall Plot for Model Explanation and Interpretation')
