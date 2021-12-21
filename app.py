@@ -74,7 +74,7 @@ if submit:
     
     st.subheader('SHAP Waterfall Plot for Model Explanation and Interpretation')
     explainer = shap.Explainer(model,X)
-    shap_values = explainer(X)
+    shap_values = explainer.shap_values(df.iloc[0])
     fig, ax = plt.subplots(nrows=1, ncols=1)
     shap.plots._waterfall.waterfall_legacy(explainer.expected_value,shap_values,df.iloc[0],feature_names=feature_names)   
     st.pyplot(fig)
