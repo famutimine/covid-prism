@@ -72,10 +72,10 @@ if submit:
     st.write("Risk of Severe Illness or In-Hospital Mortality: ", str(round(float(probability),2)*100) +"%")
     st.write('---')
     
-    explainer = shap.TreeExplainer(model)
-    shap_values = explainer.shap_values(df.iloc[0])
+    explainer = shap.Explainer(model, X)
+    shap_values = explainer(X)
     fig, ax = plt.subplots(nrows=1, ncols=1)
-    shap.plots._waterfall.waterfall_legacy(explainer.expected_value, shap_values[0],df.iloc[0],feature_names=feature_names)
+    shap.plots.waterfall(shap_values[0],df.iloc[0])
     st.pyplot(fig)
     st.write('''Variables corresponding to the red arrow increased the prediction while variables corresponding to the blue arrow decreased prediction for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
         
