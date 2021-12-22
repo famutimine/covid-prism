@@ -78,10 +78,10 @@ if submit:
     st.write('---')
     
     st.subheader('SHAP Waterfall Plot for Model Explanation and Interpretation')
-    explainer = shap.Explainer(model)
-    shap_values = explainer.shap_values(df.iloc[0])
+    explainer = shap.Explainer(model,X)
+    shap_values = explainer.shap_values(X)
     fig, ax = plt.subplots()
-    st_shap(shap.plots.waterfall(shap_values,matplotlib=True))
+    st_shap(shap.plots.waterfall(shap_values(df.iloc[0]),matplotlib=True))
     st.pyplot(fig)
     st.write('''Variables corresponding to the red arrow increased the prediction while variables corresponding to the blue arrow decreased prediction for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
         
