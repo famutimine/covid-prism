@@ -83,7 +83,7 @@ if submit:
     fig, ax = plt.subplots()
     shap.plots._waterfall.waterfall_legacy(explainer.expected_value,shap_values,feature_names=feature_names) 
     st.pyplot(fig)
-   st.write('''Variables corresponding to the red arrow increased the prediction (increased the risk), while variables corresponding to the blue arrow decreased prediction (decreased the risk) for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
+    st.write('''Variables corresponding to the red arrow increased the prediction (increased the risk), while variables corresponding to the blue arrow decreased prediction (decreased the risk) for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
     
     probability48 = model48.predict_proba(df)[:,1]
     st.header('Model Prediction for 48-hour Risk of Progression to Severe Illness or Mortality')
