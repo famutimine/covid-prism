@@ -27,7 +27,7 @@ from PIL import Image
 from io import BytesIO
 
 @st.cache
-st.set_page_config(layout="centered")
+#st.set_page_config(layout="centered")
 hide_streamlit_style = """
 <style>
 #MainMenu {visibility: hidden;}
