@@ -26,7 +26,6 @@ from flask import Flask, request, redirect, url_for, flash, jsonify, make_respon
 from PIL import Image
 from io import BytesIO
 
-
 st.set_page_config(layout="centered")
 hide_streamlit_style = """
 <style>
@@ -65,17 +64,19 @@ df = user_input_features()
 feature_names= ['Albumin', 'BUN', 'SpO2_FiO2_Ratio', 'Respiratory_Rate',  'HGB','Heart_Rate','SBP'] 
 df = pd.DataFrame(df,columns = feature_names)
 
+
 submit = st.button('Get predictions')
 if submit:
     probability = model.predict_proba(df)[:,1]
     st.header('Model Prediction')
     st.write("Risk of Severe Illness or In-Hospital Mortality: ", str(round(float(probability*100),1)) +"%")
-    st.write('---')    
+    st.write('---')
+    
     st.subheader('SHAP Waterfall Plot for Model Explanation and Interpretation')
     explainer = shap.Explainer(model,X)
     shap_values = explainer.shap_values(df.iloc[0])
-    fig, ax = plt.subplots(nrows=1, ncols=1)
-    shap.plots.waterfall(explainer.expected_value,shap_values) 
+    fig, ax = plt.subplots()
+    shap.plots._waterfall.waterfall_legacy(explainer.expected_value,shap_values,feature_names=feature_names) 
     st.pyplot(fig)
     st.write('''Variables corresponding to the red arrow increased the prediction while variables corresponding to the blue arrow decreased prediction for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
         
