@@ -78,7 +78,7 @@ if submit:
     st.write('---')
     
     st.subheader('SHAP Waterfall Plot for Model Explanation and Interpretation')
-    explainer = shap.Explainer(model, X)
+    explainer = shap.Explainer(model)
     shap_values = explainer.shap_values(df.iloc[0])
     fig, ax = plt.subplots()
     st_shap(shap.plots.waterfall(shap_values,matplotlib=True))
