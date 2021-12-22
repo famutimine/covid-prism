@@ -1,3 +1,32 @@
+Skip to content
+Search or jump to…
+Pull requests
+Issues
+Marketplace
+Explore
+ 
+@famutimine 
+famutimine
+/
+covid-prism
+Public
+Code
+Issues
+Pull requests
+Actions
+Projects
+Wiki
+Security
+Insights
+Settings
+covid-prism/app.py /
+@famutimine
+famutimine Update app.py
+Latest commit 00dfd10 6 minutes ago
+ History
+ 1 contributor
+89 lines (82 sloc)  5.12 KB
+   
 import streamlit as st
 import requests
 import datetime
@@ -39,14 +68,20 @@ image = Image.open(BytesIO(response.content))
 st.image(image)
 st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 st.markdown('''_A Real Time **COVID**-19 **P**ersonalized **R**isk **I**ntelligence **S**ystem for **M**ortality (COVID-PRISM)_.''')
-st.markdown('''**Important Note**: COVID-PRISM is artificial intelligence-based prognostic model developed at the University of Missouri Healthcare-Columbia using a cohort of 1,917 patients hospitalized with a diagnosis of COVID-19 during April 1, 2020 through November 30, 2021.
-This model has been internally validated to predict 24-48 hour inpatient mortality risk with an area under the receiver operating characteristic curve (AUROC) of 0.97, sensitivity of 89% and specificity of 94%.''')
+st.markdown('''**Background**: COVID-PRISM is artificial intelligence-based prognostic model developed at the University of Missouri Healthcare-Columbia using a cohort of 1,917 patients hospitalized with a diagnosis of COVID-19 during April 1, 2020 through November 30, 2021.
+This model has been internally validated to predict 24- and -48 hour risk of progression to severe illness or inpatient mortality. Model achieved area under the receiver operating characteristic curve (AUROC) score of 0.97, sensitivity of 89% and specificity of 92% for predicting 24-hour risk, and AUROC score of 0.96, sensitivity of 89% and specificity of 94% for predicting 48-hour risk''')
 covid_df=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid19_data.csv')
+covid_df48=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid19_data_48.csv')
 covid_df.rename(columns={"SpO2_FiO2_Ratio":"SpO2:FiO2 Ratio","BUN":"Blood Urea Nitrogen","Respiratory_Rate":"Respiratory Rate","HGB":"Hemoglobin","Heart_Rate":"Heart Rate","SBP":"Systolic Blood Pressure"},inplace = True)
+covid_df48.rename(columns={"SpO2_FiO2_Ratio":"SpO2:FiO2 Ratio","BUN":"Blood Urea Nitrogen","Respiratory_Rate":"Respiratory Rate","HGB":"Hemoglobin","Heart_Rate":"Heart Rate","SBP":"Systolic Blood Pressure"},inplace = True)
 X = covid_df.iloc[:, :-1]
 Y = covid_df.iloc[:, -1:]
+X_48 = covid_df48.iloc[:, :-1]
+Y_48 = covid_df48.iloc[:, -1:]
 model=XGBClassifier()
 model.fit(X, Y)
+model48=XGBClassifier()
+model48.fit(X_48, Y_48)
 st.header('Enter the most recent values within the last 24 hours')
 def user_input_features():
     input_features = {}
@@ -66,19 +101,32 @@ df = pd.DataFrame(df,columns = feature_names)
 
 submit = st.button('Get predictions')
 if submit:
-    probability = model.predict_proba(df)[:,1]
-    st.header('Model Prediction')
-    st.write("Risk of Severe Illness or In-Hospital Mortality: ", str(round(float(probability*100),1)) +"%")
+    probability = model.predict_proba(df)[:,1]    
+    st.header('Model Prediction for 24-hour Risk of Progression to Severe Illness or Mortality')
+    st.write("24-hour Risk of Progression to Severe Illness or Mortality: ", str(round(float(probability*100),1)) +"%")
     st.write('---')
     
-    st.subheader('SHAP Waterfall Plot for Model Explanation and Interpretation')
+    st.subheader('SHAP Waterfall Plot for Model Explanation and Interpretation (24-Hour Risk)')
     explainer = shap.Explainer(model,X)
     shap_values = explainer.shap_values(df.iloc[0])
     fig, ax = plt.subplots()
     shap.plots._waterfall.waterfall_legacy(explainer.expected_value,shap_values,feature_names=feature_names) 
     st.pyplot(fig)
     st.write('''Variables corresponding to the red arrow increased the prediction while variables corresponding to the blue arrow decreased prediction for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
-        
+    
+    probability48 = model48.predict_proba(df)[:,1]
+    st.header('Model Prediction for 48-hour Risk of Progression to Severe Illness or Mortality')
+    st.write("48-hour Risk of Progression to Severe Illness or Mortality: ", str(round(float(probability48*100),1)) +"%")
+    st.write('---')
+    
+    st.subheader('SHAP Waterfall Plot for Model Explanation and Interpretation (48-Hour Risk)')
+    explainer48 = shap.Explainer(model48,X_48)
+    shap_values48 = explainer48.shap_values(df.iloc[0])
+    fig48, ax48 = plt.subplots()
+    shap.plots._waterfall.waterfall_legacy(explainer48.expected_value,shap_values48,feature_names=feature_names) 
+    st.pyplot(fig48)
+    st.write('''Variables corresponding to the red arrow increased the prediction while variables corresponding to the blue arrow decreased prediction for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
+    
 st.write('---')
 st.markdown('''**Disclaimer**: This tool (hereinafter referred to as "COVID-PRISM / Algorithm") is being made publicly available for academic and research purposes only and is not intended for the diagnosis or treatment of any disease or condition, including COVID-19 in individual patients. COVID-PRISM is not a substitute for independent clinical assessment or judgement. All representations and warranties regarding the Algorithm, including warranties of fitness for use in clinical decision making and warranties that the Algorithm works as intended, is clinically safe, does not infringe on third party intellectual property rights, and/or is free from defects and bugs, are hereby disclaimed.''')
 
