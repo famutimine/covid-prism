@@ -26,6 +26,7 @@ from flask import Flask, request, redirect, url_for, flash, jsonify, make_respon
 from PIL import Image
 from io import BytesIO
 
+@st.cache
 st.set_page_config(layout="centered")
 hide_streamlit_style = """
 <style>
@@ -39,7 +40,7 @@ image = Image.open(BytesIO(response.content))
 st.image(image)
 st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 st.markdown('''_A Real Time **COVID**-19 **P**ersonalized **R**isk **I**ntelligence **S**ystem for **M**ortality (COVID-PRISM)_.''')
-st.markdown('''**Important Note**: COVID-PRISM is artificial intelligence-based prognostic model developed using data from 1,917 patients hospitalized with a diagnosis of COVID-19 at the University of Missouri Healthcare-Columbia during April 1, 2020 through November 30, 2021.
+st.markdown('''**Important Note**: COVID-PRISM is artificial intelligence-based prognostic model developed at the University of Missouri Healthcare-Columbia using a cohort of 1,917 patients hospitalized with a diagnosis of COVID-19 during April 1, 2020 through November 30, 2021.
 This model has been internally validated to predict 24-48 hour inpatient mortality risk with an area under the receiver operating characteristic curve (AUROC) of 0.97, sensitivity of 89% and specificity of 94%.''')
 st.write('---')
 st.markdown('''**Disclaimer**: This tool (hereinafter referred to as "COVID-PRISM / Algorithm") is being made publicly available for academic and research purposes only and is not intended for the diagnosis or treatment of any disease or condition, including COVID-19 in individual patients. COVID-PRISM is not a substitute for independent clinical assessment or judgement. All representations and warranties regarding the Algorithm, including warranties of fitness for use in clinical decision making and warranties that the Algorithm works as intended, is clinically safe, does not infringe on third party intellectual property rights, and/or is free from defects and bugs, are hereby disclaimed.''')
@@ -81,13 +82,6 @@ if submit:
     st.pyplot(fig)
     st.write('''Variables corresponding to the red arrow increased the prediction while variables corresponding to the blue arrow decreased prediction for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
         
-st.write('---')
-st.markdown('''**Developer/Author Information**''')
-st.markdown('''Olubusayo Daniel Famutimi, MD, MPH''')
-st.markdown('''email: _famutimio@health.missouri.edu_''')
-st.markdown('''**Contributors & Co-Authors**''')
-st.markdown('''Tinashe Maduke, MD, MPH''')
-st.markdown('''Hariharan Regunath, MD, FACP, FIDSA''')
 
 hide_footer_style = """
 <style>
