@@ -1,32 +1,3 @@
-Skip to content
-Search or jump to…
-Pull requests
-Issues
-Marketplace
-Explore
- 
-@famutimine 
-famutimine
-/
-covid-prism
-Public
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-covid-prism/app.py /
-@famutimine
-famutimine Update app.py
-Latest commit 00dfd10 6 minutes ago
- History
- 1 contributor
-89 lines (82 sloc)  5.12 KB
-   
 import streamlit as st
 import requests
 import datetime
