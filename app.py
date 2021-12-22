@@ -26,6 +26,7 @@ from flask import Flask, request, redirect, url_for, flash, jsonify, make_respon
 from PIL import Image
 from io import BytesIO
 
+@st.cache
 st.set_page_config(layout="centered")
 hide_streamlit_style = """
 <style>
@@ -44,7 +45,6 @@ This model has been internally validated to predict 24-48 hour inpatient mortali
 st.write('---')
 st.markdown('''**Disclaimer**: This tool (hereinafter referred to as "COVID-PRISM / Algorithm") is being made publicly available for academic and research purposes only and is not intended for the diagnosis or treatment of any disease or condition, including COVID-19 in individual patients. COVID-PRISM is not a substitute for independent clinical assessment or judgement. All representations and warranties regarding the Algorithm, including warranties of fitness for use in clinical decision making and warranties that the Algorithm works as intended, is clinically safe, does not infringe on third party intellectual property rights, and/or is free from defects and bugs, are hereby disclaimed.''')
 covid_df=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid19_data.csv')
-
 X = covid_df.iloc[:, :-1]
 Y = covid_df.iloc[:, -1:]
 model=XGBClassifier()
@@ -53,7 +53,7 @@ st.header('Enter the most recent values within the last 24 hours')
 def user_input_features():
     input_features = {}
     input_features["Albumin"] = st.number_input(label='Serum Albumin (g/L)', value=3.20, format="%.2f")
-    input_features["BUN"] = st.number_input(label='Blood Urea Nitrogen (mg/dL)', value=23.0) 
+    input_features["BUN"] = st.number_input(label='Blood Urea Nitrogen (mg/dL)', value=23.00, format="%.2f") 
     input_features["SpO2_FiO2_Ratio"] = st.number_input(label='SpO2:FiO2 Ratio', value=180)
     input_features["Respiratory_Rate"] = st.number_input(label='Respiratory Rate (breaths/min)', value=42) 
     input_features["HGB"] = st.number_input(label='Hemoglobin Level (g/dL)', value=12.7)
@@ -78,10 +78,10 @@ if submit:
     st.write('---')
     
     st.subheader('SHAP Waterfall Plot for Model Explanation and Interpretation')
-    explainer = shap.Explainer(model,X)
-    shap_values = explainer.shap_values(X)
+    explainer = shap.Explainer(model)
+    shap_values = explainer.shap_values(df.iloc[0])
     fig, ax = plt.subplots()
-    st_shap(shap.plots.waterfall(shap_values(df.iloc[0]),matplotlib=True))
+    st_shap(shap.plots.waterfall(shap_values,matplotlib=True))
     st.pyplot(fig)
     st.write('''Variables corresponding to the red arrow increased the prediction while variables corresponding to the blue arrow decreased prediction for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
         
