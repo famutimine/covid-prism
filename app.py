@@ -56,7 +56,7 @@ model48.fit(X_48, Y_48)
 st.header('Enter the most recent values within the last 24 hours')
 def user_input_features():
     input_features = {}
-    input_features["Albumin"] = st.number_input(label='Serum Albumin (g/L)',value="" format="%.2f")
+    input_features["Albumin"] = st.number_input(label='Serum Albumin (g/L)',value="")
     input_features["Blood Urea Nitrogen"] = st.number_input(label='Blood Urea Nitrogen (mg/dL)',value="") 
     input_features["SpO2:FiO2 Ratio"] = st.number_input(label='SpO2:FiO2 Ratio', value=180)
     input_features["Respiratory Rate"] = st.number_input(label='Respiratory Rate (breaths/min)', value=42) 
