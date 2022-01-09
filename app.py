@@ -79,7 +79,7 @@ if submit:
     st.write('---')
     
     st.subheader('SHAP Waterfall Plot for Model Explanation and Interpretation (24-Hour Risk)')
-    explainer = shap.Explainer(model)
+    explainer = shap.Explainer(model,X)
     shap_values = explainer.shap_values(df.iloc[0])
     fig, ax = plt.subplots()
     shap.plots._waterfall.waterfall_legacy(explainer.expected_value,shap_values,feature_names=feature_names)
