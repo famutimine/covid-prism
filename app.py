@@ -53,7 +53,7 @@ model=XGBClassifier()
 model.fit(X, Y)
 model7=XGBClassifier()
 model7.fit(X_7, Y_7)
-st.header('For vital sign variables (including SpO2:FiO2 Ratio), enter the most recent value within the last 24 hours. For serum biomarker variables, enter the most recent value in the last 72 hours')
+st.markdown('For vital sign variables (including SpO2:FiO2 Ratio), enter the most recent value within the last 24 hours. For laboratory variables, enter the most recent value in the last 72 hours')
 def user_input_features():
     input_features = {}
     input_features["Albumin"] = st.number_input(label='Serum Albumin (g/L)', value=3.20, format="%.2f")
