@@ -53,7 +53,7 @@ model=XGBClassifier()
 model.fit(X, Y)
 model7=XGBClassifier()
 model7.fit(X_7, Y_7)
-st.markdown('For vital sign variables (including SpO2:FiO2 Ratio), enter the most recent value within the last 24 hours. For laboratory variables, enter the most recent value in the last 72 hours')
+st.markdown('**For vital sign variables (including SpO2:FiO2 Ratio), enter the most recent value within the last 24 hours. For laboratory variables, enter the most recent value in the last 72 hours**')
 def user_input_features():
     input_features = {}
     input_features["Albumin"] = st.number_input(label='Serum Albumin (g/L)', value=3.20, format="%.2f")
@@ -81,7 +81,7 @@ if submit:
     explainer = shap.Explainer(model,X)
     shap_values = explainer.shap_values(df.iloc[0])
     fig, ax = plt.subplots()
-    shap.plots._waterfall.waterfall_legacy(explainer.expected_value,shap_values,feature_names=feature_names) 
+    shap.plots._waterfall.waterfall_legacy(explainer.expected_value,shap_values.reshape(-1),feature_names=feature_names) 
     st.pyplot(fig)
     st.write('''Variables corresponding to the red arrow increased the prediction (increased the risk), while variables corresponding to the blue arrow decreased prediction (decreased the risk) for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
     
@@ -94,7 +94,7 @@ if submit:
     explainer7 = shap.Explainer(model7,X_7)
     shap_values7 = explainer7.shap_values(df.iloc[0])
     fig7, ax7 = plt.subplots()
-    shap.plots._waterfall.waterfall_legacy(explainer7.expected_value,shap_values7,feature_names=feature_names) 
+    shap.plots._waterfall.waterfall_legacy(explainer7.expected_value,shap_values7.reshape(-1),feature_names=feature_names) 
     st.pyplot(fig7)
     st.write('''Variables corresponding to the red arrow increased the prediction (increased the risk), while variables corresponding to the blue arrow decreased prediction (decreased the risk) for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
     
