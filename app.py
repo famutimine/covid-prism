@@ -40,20 +40,20 @@ st.image(image)
 st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 st.markdown('''_A Real Time **COVID**-19 **P**ersonalized **R**isk **I**ntelligence **S**ystem for **M**ortality (COVID-PRISM)_.''')
 st.markdown('''**Background**: COVID-PRISM is artificial intelligence-based prognostic model developed at the University of Missouri Healthcare-Columbia using a cohort of 1,917 patients hospitalized with a diagnosis of COVID-19 during April 1, 2020 through November 30, 2021.
-This model has been internally validated to predict 24- and -48 hour risk of progression to severe illness or inpatient mortality. Model achieved area under the receiver operating characteristic curve (AUROC) score of 0.97, sensitivity of 90% and specificity of 92% for predicting 24-hour risk, and AUROC score of 0.96, sensitivity of 89% and specificity of 94% for predicting 48-hour risk.''')
+This model has been internally validated to predict 24-hour and 7-day risk of progression to severe illness or inpatient mortality. Model achieved area under the receiver operating characteristic curve (AUROC) score of 0.974, sensitivity of 90% and specificity of 92.8% for predicting 24-hour risk, and AUROC score of 0.953, sensitivity of 87.6% and specificity of 92% for predicting 7-day risk.''')
 covid_df=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid19_data.csv')
-covid_df48=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid19_data_48.csv')
+covid_df_7=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid19_data_7.csv')
 covid_df.rename(columns={"SpO2_FiO2_Ratio":"SpO2:FiO2 Ratio","BUN":"Blood Urea Nitrogen","Respiratory_Rate":"Respiratory Rate","HGB":"Hemoglobin","Heart_Rate":"Heart Rate","SBP":"Systolic Blood Pressure"},inplace = True)
-covid_df48.rename(columns={"SpO2_FiO2_Ratio":"SpO2:FiO2 Ratio","BUN":"Blood Urea Nitrogen","Respiratory_Rate":"Respiratory Rate","HGB":"Hemoglobin","Heart_Rate":"Heart Rate","SBP":"Systolic Blood Pressure"},inplace = True)
+covid_df_7.rename(columns={"SpO2_FiO2_Ratio":"SpO2:FiO2 Ratio","BUN":"Blood Urea Nitrogen","Respiratory_Rate":"Respiratory Rate","HGB":"Hemoglobin","Heart_Rate":"Heart Rate","SBP":"Systolic Blood Pressure"},inplace = True)
 X = covid_df.iloc[:, :-1]
 Y = covid_df.iloc[:, -1:]
-X_48 = covid_df48.iloc[:, :-1]
-Y_48 = covid_df48.iloc[:, -1:]
+X_7 = covid_df_7.iloc[:, :-1]
+Y_7 = covid_df_7.iloc[:, -1:]
 model=XGBClassifier()
 model.fit(X, Y)
-model48=XGBClassifier()
-model48.fit(X_48, Y_48)
-st.header('Enter the most recent values within the last 24 hours')
+model7=XGBClassifier()
+model7.fit(X_7, Y_7)
+st.header('For vital sign variables (including SpO2:FiO2 Ratio), enter the most recent value within the last 24 hours. For serum biomarker variables, enter the most recent value in the last 72 hours')
 def user_input_features():
     input_features = {}
     input_features["Albumin"] = st.number_input(label='Serum Albumin (g/L)', value=3.20, format="%.2f")
@@ -85,17 +85,17 @@ if submit:
     st.pyplot(fig)
     st.write('''Variables corresponding to the red arrow increased the prediction (increased the risk), while variables corresponding to the blue arrow decreased prediction (decreased the risk) for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
     
-    probability48 = model48.predict_proba(df)[:,1]
-    st.header('Model Prediction for 48-hour Risk of Progression to Severe Illness or Mortality')
-    st.write("48-hour Risk of Progression to Severe Illness or Mortality: ", str(round(float(probability48*100),1)) +"%")
+    probability7 = model7.predict_proba(df)[:,1]
+    st.header('Model Prediction for 7-day Risk of Progression to Severe Illness or Mortality')
+    st.write("7-day Risk of Progression to Severe Illness or Mortality: ", str(round(float(probability7*100),1)) +"%")
     st.write('---')
     
-    st.subheader('SHAP Waterfall Plot for Model Explanation and Interpretation (48-Hour Risk)')
-    explainer48 = shap.Explainer(model48,X_48)
-    shap_values48 = explainer48.shap_values(df.iloc[0])
-    fig48, ax48 = plt.subplots()
-    shap.plots._waterfall.waterfall_legacy(explainer48.expected_value,shap_values48,feature_names=feature_names) 
-    st.pyplot(fig48)
+    st.subheader('SHAP Waterfall Plot for Model Explanation and Interpretation (7-day Risk)')
+    explainer7 = shap.Explainer(model7,X_7)
+    shap_values7 = explainer7.shap_values(df.iloc[0])
+    fig7, ax7 = plt.subplots()
+    shap.plots._waterfall.waterfall_legacy(explainer7.expected_value,shap_values7,feature_names=feature_names) 
+    st.pyplot(fig7)
     st.write('''Variables corresponding to the red arrow increased the prediction (increased the risk), while variables corresponding to the blue arrow decreased prediction (decreased the risk) for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
     
 st.write('---')
