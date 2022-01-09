@@ -81,6 +81,8 @@ if submit:
     explainer = shap.Explainer(model,X)
     shap_values = explainer.shap_values(df.iloc[0])
     fig, ax = plt.subplots()
+    shap_values.values=shap_values.values[:,:,1]
+    shap_values.base_values=shap_values.base_values[:,1]
     shap.plots.waterfall(shap_values)
     # shap.plots._waterfall.waterfall_legacy(explainer.expected_value,shap_values,feature_names=feature_names) 
     st.pyplot(fig)
@@ -95,6 +97,8 @@ if submit:
     explainer7 = shap.Explainer(model7,X_7)
     shap_values7 = explainer7.shap_values(df.iloc[0])
     fig7, ax7 = plt.subplots()
+    shap_values7.values=shap_values7.values[:,:,1]
+    shap_values7.base_values=shap_values7.base_values[:,1]
     shap.plots.waterfall(shap_values7)
     # shap.plots._waterfall.waterfall_legacy(explainer7.expected_value,shap_values7,feature_names=feature_names) 
     st.pyplot(fig7)
