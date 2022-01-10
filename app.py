@@ -44,7 +44,12 @@ st.markdown('''**Background**: COVID-PRISM is artificial intelligence-based prog
 This model has been internally validated to predict 24-hour and 7-day risk of progression to severe illness or inpatient mortality. Model achieved area under the receiver operating characteristic curve (AUROC) score of 0.974, sensitivity of 90% and specificity of 92.8% for predicting 24-hour risk, and AUROC score of 0.953, sensitivity of 87.6% and specificity of 92% for predicting 7-day risk.''')
 
 st.write('---')
-st.text('''**Disclaimer**: This tool (hereinafter referred to as "COVID-PRISM / Algorithm") is being made publicly available for academic and research purposes only and is not intended for the diagnosis or treatment of any disease or condition, including COVID-19 in individual patients. COVID-PRISM is not a substitute for independent clinical assessment or judgement. All representations and warranties regarding the Algorithm, including warranties of fitness for use in clinical decision making and warranties that the Algorithm works as intended, is clinically safe, does not infringe on third party intellectual property rights, and/or is free from defects and bugs, are hereby disclaimed.''')
+st.write('''**Disclaimer**: This tool (hereinafter referred to as "COVID-PRISM / Algorithm") is being made publicly available for
+academic and research purposes only and is not intended for the diagnosis or treatment of any disease or condition, 
+including COVID-19 in individual patients. COVID-PRISM is not a substitute for independent clinical assessment or judgement.
+All representations and warranties regarding the Algorithm, including warranties of fitness for use in clinical decision making and 
+warranties that the Algorithm works as intended, is clinically safe, does not infringe on third party intellectual property rights, 
+and/or is free from defects and bugs, are hereby disclaimed.''')
 
 
 covid_df=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid19_data.csv')
