@@ -58,27 +58,33 @@ st.markdown('**For vital sign variables (including SpO2:FiO2 Ratio), enter the m
 st.markdown('**NB:** Missing values are imputed using Multivariable Imputation by Chained Equations')
 def user_input_features():
     input_features = {}
-    input_features["Albumin"] = st.text_input(label='Serum Albumin (g/L)', value="", help="leave blank is variable is missing")
-    input_features["Blood Urea Nitrogen"] = st.text_input(label='Blood Urea Nitrogen (mg/dL)', value="", help="leave blank is variable is missing") 
-    input_features["SpO2:FiO2 Ratio"] = st.number_input(label='SpO2:FiO2 Ratio', value=180)
-    input_features["Respiratory Rate"] = st.number_input(label='Respiratory Rate (breaths/min)', value=42) 
-    input_features["Hemoglobin"] = st.text_input(label='Hemoglobin Level (g/dL)', value="", help="leave blank is variable is missing")
-    input_features["Heart Rate"] = st.number_input(label='Heart Rate (beats/min)', value=118)
-    input_features["Systolic Blood Pressure"] = st.number_input(label='Systolic Blood Pressure (mmHg)', value=164)
+    input_features["Albumin"] = st.text_input(label='Serum Albumin (g/L)', value="", help="Leave blank is variable is missing")
+    input_features["Blood Urea Nitrogen"] = st.text_input(label='Blood Urea Nitrogen (mg/dL)', value="", help="Leave blank is variable is missing") 
+    input_features["SpO2:FiO2 Ratio"] = st.number_input(label='SpO2:FiO2 Ratio', value=180, help="This field is required")
+    input_features["Respiratory Rate"] = st.number_input(label='Respiratory Rate (breaths/min)', value=42, help="This field is required") 
+    input_features["Hemoglobin"] = st.text_input(label='Hemoglobin Level (g/dL)', value="", help="Leave blank is variable is missing")
+    input_features["Heart Rate"] = st.number_input(label='Heart Rate (beats/min)', value=118, help="This field is required")
+    input_features["Systolic Blood Pressure"] = st.number_input(label='Systolic Blood Pressure (mmHg)', value=164, help="This field is required")
     return [input_features]
 
 df = user_input_features()
 feature_names= ['Albumin', 'Blood Urea Nitrogen', 'SpO2:FiO2 Ratio', 'Respiratory Rate',  'Hemoglobin','Heart Rate','Systolic Blood Pressure'] 
 df = pd.DataFrame(df,columns = feature_names)
-df[["Blood Urea Nitrogen", "Hemoglobin"]] = df[["Blood Urea Nitrogen", "Hemoglobin"]].apply(pd.to_numeric)
+df[["Albumin", "Blood Urea Nitrogen", "Hemoglobin"]] = df[["Albumin","Blood Urea Nitrogen", "Hemoglobin"]].apply(pd.to_numeric)
 X=pd.concat([X, df])
 lreg = LinearRegression()
 imp = IterativeImputer(estimator=lreg,missing_values=np.nan, max_iter=40, verbose=2, imputation_order='roman',random_state=123,tol=0.00001,min_value=0)
 X=imp.fit_transform(X)
 X = pd.DataFrame(X, columns=feature_names)
+cols=["Albumin", "Blood Urea Nitrogen", "Hemoglobin"]
+for col in cols:
+    X[col]=X[col].round(1)
+
 
 df=X.tail(1)
 X_7=pd.concat([X_7, df])
+for col in cols:
+    X_7[col]=X_7[col].round(1)
 
 submit = st.button('Get predictions')
 if submit:
