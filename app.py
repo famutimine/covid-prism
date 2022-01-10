@@ -41,6 +41,11 @@ st.markdown(hide_streamlit_style, unsafe_allow_html=True)
 st.markdown('''_A Real Time **COVID**-19 **P**ersonalized **R**isk **I**ntelligence **S**ystem for **M**ortality (COVID-PRISM)_.''')
 st.markdown('''**Background**: COVID-PRISM is artificial intelligence-based prognostic model developed at the University of Missouri Healthcare-Columbia using a cohort of 1,917 patients hospitalized with a diagnosis of COVID-19 during April 1, 2020 through November 30, 2021.
 This model has been internally validated to predict 24-hour and 7-day risk of progression to severe illness or inpatient mortality. Model achieved area under the receiver operating characteristic curve (AUROC) score of 0.974, sensitivity of 90% and specificity of 92.8% for predicting 24-hour risk, and AUROC score of 0.953, sensitivity of 87.6% and specificity of 92% for predicting 7-day risk.''')
+
+st.write('---')
+st.markdown('''**Disclaimer**: This tool (hereinafter referred to as "COVID-PRISM / Algorithm") is being made publicly available for academic and research purposes only and is not intended for the diagnosis or treatment of any disease or condition, including COVID-19 in individual patients. COVID-PRISM is not a substitute for independent clinical assessment or judgement. All representations and warranties regarding the Algorithm, including warranties of fitness for use in clinical decision making and warranties that the Algorithm works as intended, is clinically safe, does not infringe on third party intellectual property rights, and/or is free from defects and bugs, are hereby disclaimed.''')
+
+
 covid_df=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid19_data.csv')
 covid_df_7=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid19_data_7.csv')
 covid_df.rename(columns={"SpO2_FiO2_Ratio":"SpO2:FiO2 Ratio","BUN":"Blood Urea Nitrogen","Respiratory_Rate":"Respiratory Rate","HGB":"Hemoglobin","Heart_Rate":"Heart Rate","SBP":"Systolic Blood Pressure"},inplace = True)
@@ -93,12 +98,21 @@ def user_input_features():
     input_features["Albumin"] = st.text_input(label="Serum Albumin (g/L)", help="Leave blank if value is missing")
     if not input_features["Albumin"]:
         st.info('Only leave the field above blank if there is no Albumin record in the past 72 hours, otherwise input the latest value of Albumin available')
+    elif input_features["Albumin"].isnumeric()==False:
+        st.error("Input is invalid. Please enter a numeric value for Albumin")
+        st.stop()
     input_features["Blood Urea Nitrogen"] = st.text_input(label="Blood Urea Nitrogen (mg/dL)", help="Leave blank if value is missing")
     if not input_features["Blood Urea Nitrogen"]:
         st.info('Only leave the field above blank if there is no Blood Urea Nitrogen record in the past 72 hours, otherwise input the latest value of Blood Urea Nitrogen available')
+    elif input_features["Blood Urea Nitrogen"].isnumeric()==False:
+        st.error("Input is invalid. Please enter a numeric value for Blood Urea Nitrogen")
+        st.stop()
     input_features["Hemoglobin"] = st.text_input(label="Hemoglobin Level (g/dL)", help="Leave blank if value is missing")
     if not input_features["Hemoglobin"]:
         st.info('Only leave the field above blank if there is no Hemoglobin record in the past 72 hours, otherwise input the latest value of Hemoglobin available')
+    elif input_features["Hemoglobin"].isnumeric()==False:
+        st.error("Input is invalid. Please enter a numeric value for Hemoglobin")
+        st.stop()
     return [input_features]
 
     
@@ -156,9 +170,6 @@ if submit:
     st.pyplot(fig7)
     st.write('''Variables corresponding to the red arrow increased the prediction (increased the risk), while variables corresponding to the blue arrow decreased prediction (decreased the risk) for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
     
-st.write('---')
-st.markdown('''**Disclaimer**: This tool (hereinafter referred to as "COVID-PRISM / Algorithm") is being made publicly available for academic and research purposes only and is not intended for the diagnosis or treatment of any disease or condition, including COVID-19 in individual patients. COVID-PRISM is not a substitute for independent clinical assessment or judgement. All representations and warranties regarding the Algorithm, including warranties of fitness for use in clinical decision making and warranties that the Algorithm works as intended, is clinically safe, does not infringe on third party intellectual property rights, and/or is free from defects and bugs, are hereby disclaimed.''')
-
 hide_footer_style = """
 <style>
 .reportview-container .main footer {visibility: hidden;}    
