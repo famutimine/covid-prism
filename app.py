@@ -98,26 +98,20 @@ def user_input_features():
     input_features["Albumin"] = st.text_input(label="Serum Albumin (g/L)", help="Leave blank if value is missing")
     if not input_features["Albumin"]:
         st.info('Only leave the field above blank if there is no Albumin record in the past 72 hours, otherwise input the latest value of Albumin available')
-    elif isinstance(input_features["Albumin"], float)==False:
-        st.error("Invalid input detected! Please enter a numeric value for Albumin")
-    elif isinstance(input_features["Albumin"], int)==False: 
-        st.error("Invalid input detected! Please enter a numeric value for Albumin")
+    elif input_features["Albumin"].isdecimal()==False:
+        st.error("Invalid input detected! Please enter a numeric value for Albumin")    
         st.stop()
     input_features["Blood Urea Nitrogen"] = st.text_input(label="Blood Urea Nitrogen (mg/dL)", help="Leave blank if value is missing")
     if not input_features["Blood Urea Nitrogen"]:
         st.info('Only leave the field above blank if there is no Blood Urea Nitrogen record in the past 72 hours, otherwise input the latest value of Blood Urea Nitrogen available')
-    elif isinstance(input_features["Blood Urea Nitrogen"], float)==False:
-        st.error("Invalid input detected! Please enter a numeric value for Blood Urea Nitrogen")
-    elif isinstance(input_features["Blood Urea Nitrogen"], int)==False:
-        st.error("Invalid input detected! Please enter a numeric value for Blood Urea Nitrogen")
+    elif input_features["Blood Urea Nitrogen"].isdecimal()==False:
+        st.error("Invalid input detected! Please enter a numeric value for Blood Urea Nitrogen")   
         st.stop()
     input_features["Hemoglobin"] = st.text_input(label="Hemoglobin Level (g/dL)", help="Leave blank if value is missing")
     if not input_features["Hemoglobin"]:
         st.info('Only leave the field above blank if there is no Hemoglobin record in the past 72 hours, otherwise input the latest value of Hemoglobin available')
-    elif isinstance(input_features["Hemoglobin"], float)==False:
-        st.error("Invalid input detected! Please enter a numeric value for Hemoglobin")
-    elif isinstance(input_features["Hemoglobin"], int)==False:
-        st.error("Invalid input detected! Please enter a numeric value for Hemoglobin")
+    elif input_features["Hemoglobin"].isdecimal()==False:
+        st.error("Invalid input detected! Please enter a numeric value for Hemoglobin")    
         st.stop()
     return [input_features]
 
