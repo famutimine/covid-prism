@@ -70,7 +70,7 @@ def user_input_features():
     input_features["Heart Rate"] = st.text_input("Heart Rate (beats/min)", "Enter a value (required)")
     if not input_features["Heart Rate"]:
         st.warning("Please fill out required fields")
-    input_features["Systolic Blood Pressure"] = st.text_input(label='Systolic Blood Pressure (mmHg)', "Enter a value (required)")
+    input_features["Systolic Blood Pressure"] = st.text_input("Systolic Blood Pressure (mmHg)", "Enter a value (required)")
     if not input_features["Systolic Blood Pressure"]:
         st.warning("Please fill out required fields")
     return [input_features]
