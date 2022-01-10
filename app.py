@@ -58,11 +58,11 @@ st.markdown('**For vital sign variables (including SpO2:FiO2 Ratio), enter the m
 st.markdown('**NB:** For missing values, please leave blank. Missing values will be automatically imputed using Multivariate Imputation by Chained Equations')
 def user_input_features():
     input_features = {}
-    input_features["Albumin"] = st.text_input(label='Serum Albumin (g/L)', value="", max_chars=3, placeholder="Leave blank if value is missing")
-    input_features["Blood Urea Nitrogen"] = st.text_input(label='Blood Urea Nitrogen (mg/dL)', value="", max_chars=4, placeholder="Leave blank if value is missing") 
+    input_features["Albumin"] = st.text_input(label='Serum Albumin (g/L)', value="", placeholder="Leave blank if value is missing")
+    input_features["Blood Urea Nitrogen"] = st.text_input(label='Blood Urea Nitrogen (mg/dL)', value="", placeholder="Leave blank if value is missing") 
     input_features["SpO2:FiO2 Ratio"] = st.number_input(label='SpO2:FiO2 Ratio', value=180, help="This field is required")
     input_features["Respiratory Rate"] = st.number_input(label='Respiratory Rate (breaths/min)', value=42, help="This field is required") 
-    input_features["Hemoglobin"] = st.text_input(label='Hemoglobin Level (g/dL)', value="", max_chars=3, placeholder="Leave blank if value is missing")
+    input_features["Hemoglobin"] = st.text_input(label='Hemoglobin Level (g/dL)', value="", placeholder="Leave blank if value is missing")
     input_features["Heart Rate"] = st.number_input(label='Heart Rate (beats/min)', value=118, help="This field is required")
     input_features["Systolic Blood Pressure"] = st.number_input(label='Systolic Blood Pressure (mmHg)', value=164, help="This field is required")
     return [input_features]
