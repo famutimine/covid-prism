@@ -40,11 +40,14 @@ image = Image.open(BytesIO(response.content))
 st.image(image)
 st.markdown(hide_streamlit_style, unsafe_allow_html=True) 
 st.markdown('''_A Real Time **COVID**-19 **P**ersonalized **R**isk **I**ntelligence **S**ystem for **M**ortality (COVID-PRISM)_.''')
-st.markdown('''**Background**: COVID-PRISM is artificial intelligence-based prognostic model developed at the University of Missouri Healthcare-Columbia using a cohort of 1,917 patients hospitalized with a diagnosis of COVID-19 during April 1, 2020 through November 30, 2021.
-This model has been internally validated to predict 24-hour and 7-day risk of progression to severe illness or inpatient mortality. Model achieved area under the receiver operating characteristic curve (AUROC) score of 0.974, sensitivity of 90% and specificity of 92.8% for predicting 24-hour risk, and AUROC score of 0.953, sensitivity of 87.6% and specificity of 92% for predicting 7-day risk.''')
+st.markdown('''**Background**: COVID-PRISM is artificial intelligence-based prognostic model developed at the University of Missouri Healthcare-Columbia 
+using a cohort of 1,917 patients hospitalized with a diagnosis of COVID-19 during April 1, 2020 through November 30, 2021.
+This model has been internally validated to predict 24-hour and 7-day risk of progression to severe illness or inpatient mortality. 
+Model achieved area under the receiver operating characteristic curve (AUROC) score of 0.974, sensitivity of 90% and specificity of 92.8%
+for predicting 24-hour risk, and AUROC score of 0.953, sensitivity of 87.6% and specificity of 92% for predicting 7-day risk.''')
 
 st.write('---')
-st.write('''**Disclaimer**: This tool (hereinafter referred to as "COVID-PRISM / Algorithm") is being made publicly available for
+st.write('''##### **Disclaimer**: This tool (hereinafter referred to as "COVID-PRISM / Algorithm") is being made publicly available for
 academic and research purposes only and is not intended for the diagnosis or treatment of any disease or condition, 
 including COVID-19 in individual patients. COVID-PRISM is not a substitute for independent clinical assessment or judgement.
 All representations and warranties regarding the Algorithm, including warranties of fitness for use in clinical decision making and 
