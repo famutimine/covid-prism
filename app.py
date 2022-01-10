@@ -95,7 +95,7 @@ if submit:
     st.write('---')
     
     st.subheader('SHAP Waterfall Plot for Model Explanation and Interpretation (7-day Risk)')
-    
+    fig7, ax7 = plt.subplots()
     explainer7 = shap.Explainer(model7)
     shap_values = explainer(X_7)
     idx7=len(X_7)-1
