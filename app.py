@@ -62,17 +62,21 @@ def user_input_features():
     input_features["Blood Urea Nitrogen"] = st.text_input(label="Blood Urea Nitrogen (mg/dL)", help="Leave blank if value is missing") 
     input_features["SpO2:FiO2 Ratio"] = st.text_input(label="SpO2:FiO2 Ratio", value="",help="This is a required field")
     if not input_features["SpO2:FiO2 Ratio"]:
-        st.warning("Please fill out required fields")
+        st.warning("Field above is required. Please enter a value")
+        st.stop()
     input_features["Respiratory Rate"] = st.text_input(label="Respiratory Rate (breaths/min)",value="",help="This is a required field") 
     if not input_features["Respiratory Rate"]:
-        st.warning("Please fill out required fields")
+        st.warning("Field above is required. Please enter a value")
+        st.stop()
     input_features["Hemoglobin"] = st.text_input(label="Hemoglobin Level (g/dL)", help="Leave blank if value is missing")
     input_features["Heart Rate"] = st.text_input(label="Heart Rate (beats/min)", value="",help="This is a required field")
     if not input_features["Heart Rate"]:
-        st.warning("Please fill out required fields")
+        st.warning("Field above is required. Please enter a value")
+        st.stop()
     input_features["Systolic Blood Pressure"] = st.text_input(label="Systolic Blood Pressure (mmHg)", value="",help="This is a required field")
     if not input_features["Systolic Blood Pressure"]:
-        st.warning("Please fill out required fields")
+        st.warning("Field above is required. Please enter a value")
+        st.stop()
     return [input_features]
     
         
