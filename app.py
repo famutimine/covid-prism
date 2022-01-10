@@ -58,13 +58,21 @@ st.markdown('**For vital sign variables (including SpO2:FiO2 Ratio), enter the m
 st.markdown('**NB:** For missing values, please leave blank. Missing values will be automatically imputed using Multivariate Imputation by Chained Equations')
 def user_input_features():
     input_features = {}
-    input_features["Albumin"] = st.text_input(label='Serum Albumin (g/L)', value="", help="Leave blank if value is missing")
-    input_features["Blood Urea Nitrogen"] = st.text_input(label='Blood Urea Nitrogen (mg/dL)', value="", help="Leave blank if value is missing") 
-    input_features["SpO2:FiO2 Ratio"] = st.number_input(label='SpO2:FiO2 Ratio', value=180, help="This field is required")
-    input_features["Respiratory Rate"] = st.number_input(label='Respiratory Rate (breaths/min)', value=42, help="This field is required") 
-    input_features["Hemoglobin"] = st.text_input(label='Hemoglobin Level (g/dL)', value="", help="Leave blank if value is missing")
-    input_features["Heart Rate"] = st.number_input(label='Heart Rate (beats/min)', value=118, help="This field is required")
-    input_features["Systolic Blood Pressure"] = st.number_input(label='Systolic Blood Pressure (mmHg)', value=164, help="This field is required")
+    input_features["Albumin"] = st.text_input(label='Serum Albumin (g/L)', "Leave blank if value is missing")
+    input_features["Blood Urea Nitrogen"] = st.text_input(label='Blood Urea Nitrogen (mg/dL)', "Leave blank if value is missing") 
+    input_features["SpO2:FiO2 Ratio"] = st.text_input(label='SpO2:FiO2 Ratio', "Enter a value (required)")
+    if not input_features["SpO2:FiO2 Ratio"]:
+        st.warning("Please fill out required fields")
+    input_features["Respiratory Rate"] = st.text_input(label='Respiratory Rate (breaths/min)',"Enter a value (required)") 
+    if not input_features["Respiratory Rate"]:
+        st.warning("Please fill out required fields")
+    input_features["Hemoglobin"] = st.text_input(label='Hemoglobin Level (g/dL)', "Leave blank if value is missing")
+    input_features["Heart Rate"] = st.text_input(label='Heart Rate (beats/min)', "Enter a value (required)")
+    if not input_features["Heart Rate"]:
+        st.warning("Please fill out required fields")
+    input_features["Systolic Blood Pressure"] = st.text_input(label='Systolic Blood Pressure (mmHg)', "Enter a value (required)")
+    if not input_features["Systolic Blood Pressure"]:
+        st.warning("Please fill out required fields")
     return [input_features]
     
         
@@ -72,7 +80,7 @@ df = user_input_features()
 feature_names= ['Albumin', 'Blood Urea Nitrogen', 'SpO2:FiO2 Ratio', 'Respiratory Rate',  'Hemoglobin','Heart Rate','Systolic Blood Pressure'] 
 df = pd.DataFrame(df,columns = feature_names)
 try:
-   df[["Albumin", "Blood Urea Nitrogen", "Hemoglobin"]] = df[["Albumin","Blood Urea Nitrogen", "Hemoglobin"]].apply(pd.to_numeric) 
+   df[['Albumin', 'Blood Urea Nitrogen', 'SpO2:FiO2 Ratio', 'Respiratory Rate',  'Hemoglobin','Heart Rate','Systolic Blood Pressure']] = df[['Albumin', 'Blood Urea Nitrogen', 'SpO2:FiO2 Ratio', 'Respiratory Rate',  'Hemoglobin','Heart Rate','Systolic Blood Pressure']].apply(pd.to_numeric) 
 except ValueError:
     st.error('Please enter a valid input')
     st.stop()
