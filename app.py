@@ -26,8 +26,6 @@ from flask import Flask, request, redirect, url_for, flash, jsonify, make_respon
 from PIL import Image
 from io import BytesIO
 
-showWarningOnDirectExecution=False
-
 st.set_page_config(layout="centered")
 hide_streamlit_style = """
 <style>
@@ -69,7 +67,10 @@ def user_input_features():
     input_features["Systolic Blood Pressure"] = st.number_input(label='Systolic Blood Pressure (mmHg)', value=164, help="This field is required")
     return [input_features]
 
-df = user_input_features()
+try:
+    df = user_input_features()
+except ValueError:
+    st.error('Please enter a valid input')
 feature_names= ['Albumin', 'Blood Urea Nitrogen', 'SpO2:FiO2 Ratio', 'Respiratory Rate',  'Hemoglobin','Heart Rate','Systolic Blood Pressure'] 
 df = pd.DataFrame(df,columns = feature_names)
 df[["Albumin", "Blood Urea Nitrogen", "Hemoglobin"]] = df[["Albumin","Blood Urea Nitrogen", "Hemoglobin"]].apply(pd.to_numeric)
