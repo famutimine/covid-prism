@@ -65,12 +65,12 @@ def user_input_features():
     input_features["Hemoglobin"] = st.text_input(label='Hemoglobin Level (g/dL)', value="", help="Leave blank if variable is missing")
     input_features["Heart Rate"] = st.number_input(label='Heart Rate (beats/min)', value=118, help="This field is required")
     input_features["Systolic Blood Pressure"] = st.number_input(label='Systolic Blood Pressure (mmHg)', value=164, help="This field is required")
-    return [input_features]
-
-try:
-    df = user_input_features()
-except ValueError:
-    st.error('Please enter a valid input')
+    try:
+        return [input_features]
+    except ValueError:
+        st.error('Please enter a valid input')
+        
+df = user_input_features()    
 feature_names= ['Albumin', 'Blood Urea Nitrogen', 'SpO2:FiO2 Ratio', 'Respiratory Rate',  'Hemoglobin','Heart Rate','Systolic Blood Pressure'] 
 df = pd.DataFrame(df,columns = feature_names)
 df[["Albumin", "Blood Urea Nitrogen", "Hemoglobin"]] = df[["Albumin","Blood Urea Nitrogen", "Hemoglobin"]].apply(pd.to_numeric)
