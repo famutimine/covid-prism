@@ -58,10 +58,10 @@ st.markdown('**For vital sign variables (including SpO2:FiO2 Ratio), enter the m
 def user_input_features():
     input_features = {}
     input_features["Albumin"] = st.number_input(label='Serum Albumin (g/L)', value=3.20, format="%.2f")
-    input_features["Blood Urea Nitrogen"] = st.number_input(label='Blood Urea Nitrogen (mg/dL)', value='') 
+    input_features["Blood Urea Nitrogen"] = st.text_input(label='Blood Urea Nitrogen (mg/dL)', value="") 
     input_features["SpO2:FiO2 Ratio"] = st.number_input(label='SpO2:FiO2 Ratio', value=180)
     input_features["Respiratory Rate"] = st.number_input(label='Respiratory Rate (breaths/min)', value=42) 
-    input_features["Hemoglobin"] = st.number_input(label='Hemoglobin Level (g/dL)', value='')
+    input_features["Hemoglobin"] = st.text_input(label='Hemoglobin Level (g/dL)', value="")
     input_features["Heart Rate"] = st.number_input(label='Heart Rate (beats/min)', value=118)
     input_features["Systolic Blood Pressure"] = st.number_input(label='Systolic Blood Pressure (mmHg)', value=164)
     return [input_features]
@@ -69,6 +69,7 @@ def user_input_features():
 df = user_input_features()
 feature_names= ['Albumin', 'Blood Urea Nitrogen', 'SpO2:FiO2 Ratio', 'Respiratory Rate',  'Hemoglobin','Heart Rate','Systolic Blood Pressure'] 
 df = pd.DataFrame(df,columns = feature_names)
+df[["Blood Urea Nitrogen", "Hemoglobin"]] = df[["Blood Urea Nitrogen", "Hemoglobin"]].apply(pd.to_numeric)
 X=pd.concat([X, df])
 lreg = LinearRegression()
 imp = IterativeImputer(estimator=lreg,missing_values=np.nan, max_iter=40, verbose=2, imputation_order='roman',random_state=123,tol=0.00001, min_value=[0,0,80,6,8,20,40])
