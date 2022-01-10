@@ -26,6 +26,10 @@ from flask import Flask, request, redirect, url_for, flash, jsonify, make_respon
 from PIL import Image
 from io import BytesIO
 
+
+[global]
+showWarningOnDirectExecution=False
+
 st.set_page_config(layout="centered")
 hide_streamlit_style = """
 <style>
