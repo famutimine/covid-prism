@@ -26,10 +26,6 @@ from flask import Flask, request, redirect, url_for, flash, jsonify, make_respon
 from PIL import Image
 from io import BytesIO
 
-
-[global]
-showWarningOnDirectExecution=False
-
 st.set_page_config(layout="centered")
 hide_streamlit_style = """
 <style>
@@ -79,6 +75,7 @@ try:
    df[["Albumin", "Blood Urea Nitrogen", "Hemoglobin"]] = df[["Albumin","Blood Urea Nitrogen", "Hemoglobin"]].apply(pd.to_numeric) 
 except ValueError:
     st.error('Please enter a valid input')
+    st.stop()
 X=pd.concat([X, df])
 lreg = LinearRegression()
 imp = IterativeImputer(estimator=lreg,missing_values=np.nan, max_iter=40, verbose=2, imputation_order='roman',random_state=123,tol=0.00001,min_value=0)
