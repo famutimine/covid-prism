@@ -58,19 +58,19 @@ st.markdown('**For vital sign variables (including SpO2:FiO2 Ratio), enter the m
 st.markdown('**NB:** For missing values, please leave blank. Missing values will be automatically imputed using Multivariate Imputation by Chained Equations')
 def user_input_features():
     input_features = {}
-    input_features["Albumin"] = st.text_input("Serum Albumin (g/L)", "Leave blank if value is missing")
-    input_features["Blood Urea Nitrogen"] = st.text_input("Blood Urea Nitrogen (mg/dL)", "Leave blank if value is missing") 
-    input_features["SpO2:FiO2 Ratio"] = st.text_input("SpO2:FiO2 Ratio", "Enter a value (required)")
+    input_features["Albumin"] = st.text_input(label="Serum Albumin (g/L)", help="Leave blank if value is missing")
+    input_features["Blood Urea Nitrogen"] = st.text_input(label="Blood Urea Nitrogen (mg/dL)", help="Leave blank if value is missing") 
+    input_features["SpO2:FiO2 Ratio"] = st.text_input(label="SpO2:FiO2 Ratio", value="",help="This is a required field")
     if not input_features["SpO2:FiO2 Ratio"]:
         st.warning("Please fill out required fields")
-    input_features["Respiratory Rate"] = st.text_input("Respiratory Rate (breaths/min)","Enter a value (required)") 
+    input_features["Respiratory Rate"] = st.text_input(label="Respiratory Rate (breaths/min)",value="",help="This is a required field") 
     if not input_features["Respiratory Rate"]:
         st.warning("Please fill out required fields")
-    input_features["Hemoglobin"] = st.text_input("Hemoglobin Level (g/dL)", "Leave blank if value is missing")
-    input_features["Heart Rate"] = st.text_input("Heart Rate (beats/min)", "Enter a value (required)")
+    input_features["Hemoglobin"] = st.text_input(label="Hemoglobin Level (g/dL)", help="Leave blank if value is missing")
+    input_features["Heart Rate"] = st.text_input(label="Heart Rate (beats/min)", value="",help="This is a required field")
     if not input_features["Heart Rate"]:
         st.warning("Please fill out required fields")
-    input_features["Systolic Blood Pressure"] = st.text_input("Systolic Blood Pressure (mmHg)", "Enter a value (required)")
+    input_features["Systolic Blood Pressure"] = st.text_input(label="Systolic Blood Pressure (mmHg)", value="",help="This is a required field")
     if not input_features["Systolic Blood Pressure"]:
         st.warning("Please fill out required fields")
     return [input_features]
