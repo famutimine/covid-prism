@@ -26,6 +26,8 @@ from flask import Flask, request, redirect, url_for, flash, jsonify, make_respon
 from PIL import Image
 from io import BytesIO
 
+showWarningOnDirectExecution=False
+
 st.set_page_config(layout="centered")
 hide_streamlit_style = """
 <style>
@@ -59,10 +61,10 @@ st.markdown('**NB:** Missing values are imputed using Multivariable Imputation b
 def user_input_features():
     input_features = {}
     input_features["Albumin"] = st.text_input(label='Serum Albumin (g/L)', value="", help="Leave blank is variable is missing")
-    input_features["Blood Urea Nitrogen"] = st.text_input(label='Blood Urea Nitrogen (mg/dL)', value="", help="Leave blank is variable is missing") 
+    input_features["Blood Urea Nitrogen"] = st.text_input(label='Blood Urea Nitrogen (mg/dL)', value="", help="Leave blank if variable is missing") 
     input_features["SpO2:FiO2 Ratio"] = st.number_input(label='SpO2:FiO2 Ratio', value=180, help="This field is required")
     input_features["Respiratory Rate"] = st.number_input(label='Respiratory Rate (breaths/min)', value=42, help="This field is required") 
-    input_features["Hemoglobin"] = st.text_input(label='Hemoglobin Level (g/dL)', value="", help="Leave blank is variable is missing")
+    input_features["Hemoglobin"] = st.text_input(label='Hemoglobin Level (g/dL)', value="", help="Leave blank if variable is missing")
     input_features["Heart Rate"] = st.number_input(label='Heart Rate (beats/min)', value=118, help="This field is required")
     input_features["Systolic Blood Pressure"] = st.number_input(label='Systolic Blood Pressure (mmHg)', value=164, help="This field is required")
     return [input_features]
