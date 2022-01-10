@@ -85,7 +85,7 @@ if submit:
     
     explainer = shap.Explainer(model)
     shap_values = explainer(df.iloc[0])
-    shap.plots.waterfall(shap_values)
+    shap.plots.waterfall(shap_values[0])
     
     # shap.plots._waterfall.waterfall_legacy(explainer.expected_value,shap_values,feature_names=feature_names,features=df.iloc[0,:])
     
