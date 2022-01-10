@@ -69,6 +69,7 @@ def user_input_features():
 df = user_input_features()
 feature_names= ['Albumin', 'Blood Urea Nitrogen', 'SpO2:FiO2 Ratio', 'Respiratory Rate',  'Hemoglobin','Heart Rate','Systolic Blood Pressure'] 
 df = pd.DataFrame(df,columns = feature_names)
+X=pd.concat([X, df])
 
 
 submit = st.button('Get predictions')
@@ -84,8 +85,9 @@ if submit:
     fig, ax = plt.subplots()
     
     explainer = shap.Explainer(model)
-    shap_values = explainer(df.iloc[0])
-    shap.plots.waterfall(shap_values[0])
+    shap_values = explainer(X)
+    idx=len(X)-1
+    shap.plots.waterfall(shap_values[idx])
     
     # shap.plots._waterfall.waterfall_legacy(explainer.expected_value,shap_values,feature_names=feature_names,features=df.iloc[0,:])
     
