@@ -70,6 +70,7 @@ df = user_input_features()
 feature_names= ['Albumin', 'Blood Urea Nitrogen', 'SpO2:FiO2 Ratio', 'Respiratory Rate',  'Hemoglobin','Heart Rate','Systolic Blood Pressure'] 
 df = pd.DataFrame(df,columns = feature_names)
 X=pd.concat([X, df])
+X_7=pd.concat([X_7, df])
 
 
 submit = st.button('Get predictions')
@@ -80,17 +81,11 @@ if submit:
     st.write('---')
     
     st.subheader('SHAP Waterfall Plot for Model Explanation and Interpretation (24-Hour Risk)')
-    # explainer = shap.Explainer(model,X)
-    # shap_values = explainer.shap_values(df.iloc[0])
-    fig, ax = plt.subplots()
-    
+    fig, ax = plt.subplots()    
     explainer = shap.Explainer(model)
     shap_values = explainer(X)
     idx=len(X)-1
-    shap.plots.waterfall(shap_values[idx])
-    
-    # shap.plots._waterfall.waterfall_legacy(explainer.expected_value,shap_values,feature_names=feature_names,features=df.iloc[0,:])
-    
+    shap.plots.waterfall(shap_values[idx])    
     st.pyplot(fig)
     st.write('''Variables corresponding to the red arrow increased the prediction (increased the risk), while variables corresponding to the blue arrow decreased prediction (decreased the risk) for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
     
@@ -100,11 +95,11 @@ if submit:
     st.write('---')
     
     st.subheader('SHAP Waterfall Plot for Model Explanation and Interpretation (7-day Risk)')
-    explainer7 = shap.Explainer(model7,X_7)
-    shap_values7 = explainer7.shap_values(df.iloc[0])
-    fig7, ax7 = plt.subplots()
-    shap.plots._waterfall.waterfall_legacy(explainer7.expected_value,shap_values7,feature_names=feature_names)
     
+    explainer7 = shap.Explainer(model7)
+    shap_values = explainer(X_7)
+    idx7=len(X_7)-1
+    shap.plots.waterfall(shap_values[idx7])
     st.pyplot(fig7)
     st.write('''Variables corresponding to the red arrow increased the prediction (increased the risk), while variables corresponding to the blue arrow decreased prediction (decreased the risk) for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
     
