@@ -55,7 +55,7 @@ model7=XGBClassifier()
 model7.fit(X_7, Y_7)
 st.write('---')
 st.markdown('**For vital sign variables (including SpO2:FiO2 Ratio), enter the most recent value within the last 24 hours. For laboratory variables, enter the most recent value in the last 72 hours.**')
-st.markdown('**NB:** For missing values, please leave blank. Missing values are imputed using Multivariable Imputation by Chained Equations')
+st.markdown('**NB:** For missing values, please leave blank. Missing values will be automatically imputed using Multivariate Imputation by Chained Equations')
 def user_input_features():
     input_features = {}
     input_features["Albumin"] = st.text_input(label='Serum Albumin (g/L)', value="", help="Leave blank if variable is missing")
