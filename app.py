@@ -44,7 +44,11 @@ This model has been internally validated to predict 24-hour and 7-day risk of pr
 covid_df=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid19_data.csv')
 covid_df_7=pd.read_csv('https://raw.githubusercontent.com/famutimine/covid-prism/main/covid19_data_7.csv')
 covid_df.rename(columns={"SpO2_FiO2_Ratio":"SpO2:FiO2 Ratio","BUN":"Blood Urea Nitrogen","Respiratory_Rate":"Respiratory Rate","HGB":"Hemoglobin","Heart_Rate":"Heart Rate","SBP":"Systolic Blood Pressure"},inplace = True)
+column_names = ['SpO2:FiO2 Ratio', 'Respiratory Rate', 'Heart Rate','Systolic Blood Pressure','Albumin', 'Blood Urea Nitrogen', 'Hemoglobin','outcome24']
+covid_df = covid_df.reindex(columns=column_names)
 covid_df_7.rename(columns={"SpO2_FiO2_Ratio":"SpO2:FiO2 Ratio","BUN":"Blood Urea Nitrogen","Respiratory_Rate":"Respiratory Rate","HGB":"Hemoglobin","Heart_Rate":"Heart Rate","SBP":"Systolic Blood Pressure"},inplace = True)
+column_names = ['SpO2:FiO2 Ratio', 'Respiratory Rate', 'Heart Rate','Systolic Blood Pressure','Albumin', 'Blood Urea Nitrogen', 'Hemoglobin','outcome7']
+covid_df_7 = covid_df_7.reindex(columns=column_names)
 X = covid_df.iloc[:, :-1]
 Y = covid_df.iloc[:, -1:]
 X_7 = covid_df_7.iloc[:, :-1]
@@ -58,33 +62,40 @@ st.markdown('**For vital sign variables (including SpO2:FiO2 Ratio), enter the m
 st.markdown('**NB:** For missing values, please leave blank. Missing values will be automatically imputed using Multivariate Imputation by Chained Equations')
 def user_input_features():
     input_features = {}
-    input_features["Albumin"] = st.text_input(label="Serum Albumin (g/L)", help="Leave blank if value is missing")
-    input_features["Blood Urea Nitrogen"] = st.text_input(label="Blood Urea Nitrogen (mg/dL)", help="Leave blank if value is missing") 
     input_features["SpO2:FiO2 Ratio"] = st.text_input(label="SpO2:FiO2 Ratio", value="",help="This is a required field")
     if not input_features["SpO2:FiO2 Ratio"]:
-        st.warning("Field above is required. Please enter a value")
+        st.warning("SpO2:FiO2 Ratio is a required field. Please enter a value")
         st.stop()
     input_features["Respiratory Rate"] = st.text_input(label="Respiratory Rate (breaths/min)",value="",help="This is a required field") 
     if not input_features["Respiratory Rate"]:
-        st.warning("Field above is required. Please enter a value")
-        st.stop()
-    input_features["Hemoglobin"] = st.text_input(label="Hemoglobin Level (g/dL)", help="Leave blank if value is missing")
+        st.warning("Respiratory Rate is a required field. Please enter a value")
+        st.stop()    
     input_features["Heart Rate"] = st.text_input(label="Heart Rate (beats/min)", value="",help="This is a required field")
     if not input_features["Heart Rate"]:
-        st.warning("Field above is required. Please enter a value")
+        st.warning("Heart Rate is a required field. Please enter a value")
         st.stop()
     input_features["Systolic Blood Pressure"] = st.text_input(label="Systolic Blood Pressure (mmHg)", value="",help="This is a required field")
     if not input_features["Systolic Blood Pressure"]:
-        st.warning("Field above is required. Please enter a value")
+        st.warning("Systolic Blood Pressure is a required field. Please enter a value")
         st.stop()
+    input_features["Albumin"] = st.text_input(label="Serum Albumin (g/L)", help="Leave blank if value is missing")
+    if not input_features["Albumin"]:
+        st.info('Leave the field above blank if there is no Albumin record in the past 72 hours, otherwise input the latest value of Albumin available')
+    input_features["Blood Urea Nitrogen"] = st.text_input(label="Blood Urea Nitrogen (mg/dL)", help="Leave blank if value is missing")
+    if not input_features["Blood Urea Nitrogen"]:
+        st.info('Leave the field above blank if there is no Blood Urea Nitrogen record in the past 72 hours, otherwise input the latest value of Blood Urea Nitrogen available')
+    input_features["Hemoglobin"] = st.text_input(label="Hemoglobin Level (g/dL)", help="Leave blank if value is missing")
+    if not input_features["Hemoglobin"]:
+        st.info('Leave the field above blank if there is no Hemoglobin record in the past 72 hours, otherwise input the latest value of Hemoglobin available')
     return [input_features]
+
     
         
 df = user_input_features()
-feature_names= ['Albumin', 'Blood Urea Nitrogen', 'SpO2:FiO2 Ratio', 'Respiratory Rate',  'Hemoglobin','Heart Rate','Systolic Blood Pressure'] 
+feature_names= ['SpO2:FiO2 Ratio', 'Respiratory Rate', 'Heart Rate','Systolic Blood Pressure','Albumin', 'Blood Urea Nitrogen', 'Hemoglobin'] 
 df = pd.DataFrame(df,columns = feature_names)
 try:
-   df[['Albumin', 'Blood Urea Nitrogen', 'SpO2:FiO2 Ratio', 'Respiratory Rate',  'Hemoglobin','Heart Rate','Systolic Blood Pressure']] = df[['Albumin', 'Blood Urea Nitrogen', 'SpO2:FiO2 Ratio', 'Respiratory Rate',  'Hemoglobin','Heart Rate','Systolic Blood Pressure']].apply(pd.to_numeric) 
+   df[['SpO2:FiO2 Ratio', 'Respiratory Rate', 'Heart Rate','Systolic Blood Pressure','Albumin', 'Blood Urea Nitrogen', 'Hemoglobin']] = df[['SpO2:FiO2 Ratio', 'Respiratory Rate', 'Heart Rate','Systolic Blood Pressure','Albumin', 'Blood Urea Nitrogen', 'Hemoglobin']].apply(pd.to_numeric) 
 except ValueError:
     st.error('Please enter a valid input')
     st.stop()
