@@ -66,27 +66,39 @@ def user_input_features():
     if not input_features["SpO2:FiO2 Ratio"]:
         st.warning("SpO2:FiO2 Ratio is a required field. Please enter a value")
         st.stop()
+    elif input_features["SpO2:FiO2 Ratio"].isnumeric()==False:
+        st.error("Please enter a numeric value for SpO2:FiO2 Ratio")
+        st.stop()
     input_features["Respiratory Rate"] = st.text_input(label="Respiratory Rate (breaths/min)",value="",help="This is a required field") 
     if not input_features["Respiratory Rate"]:
         st.warning("Respiratory Rate is a required field. Please enter a value")
+        st.stop()
+    elif input_features["Respiratory Rate"].isnumeric()==False:
+        st.error("Please enter a numeric value for Respiratory Rate")
         st.stop()    
     input_features["Heart Rate"] = st.text_input(label="Heart Rate (beats/min)", value="",help="This is a required field")
     if not input_features["Heart Rate"]:
         st.warning("Heart Rate is a required field. Please enter a value")
         st.stop()
+    elif input_features["Heart Rate"].isnumeric()==False:
+        st.error("Please enter a numeric value for Heart Rate")
+        st.stop()  
     input_features["Systolic Blood Pressure"] = st.text_input(label="Systolic Blood Pressure (mmHg)", value="",help="This is a required field")
     if not input_features["Systolic Blood Pressure"]:
         st.warning("Systolic Blood Pressure is a required field. Please enter a value")
         st.stop()
+    elif input_features["Systolic Blood Pressure"].isnumeric()==False:
+        st.error("Please enter a numeric value for Systolic Blood Pressure")
+        st.stop()  
     input_features["Albumin"] = st.text_input(label="Serum Albumin (g/L)", help="Leave blank if value is missing")
     if not input_features["Albumin"]:
-        st.info('Leave the field above blank if there is no Albumin record in the past 72 hours, otherwise input the latest value of Albumin available')
+        st.info('Only leave the field above blank if there is no Albumin record in the past 72 hours, otherwise input the latest value of Albumin available')
     input_features["Blood Urea Nitrogen"] = st.text_input(label="Blood Urea Nitrogen (mg/dL)", help="Leave blank if value is missing")
     if not input_features["Blood Urea Nitrogen"]:
-        st.info('Leave the field above blank if there is no Blood Urea Nitrogen record in the past 72 hours, otherwise input the latest value of Blood Urea Nitrogen available')
+        st.info('Only leave the field above blank if there is no Blood Urea Nitrogen record in the past 72 hours, otherwise input the latest value of Blood Urea Nitrogen available')
     input_features["Hemoglobin"] = st.text_input(label="Hemoglobin Level (g/dL)", help="Leave blank if value is missing")
     if not input_features["Hemoglobin"]:
-        st.info('Leave the field above blank if there is no Hemoglobin record in the past 72 hours, otherwise input the latest value of Hemoglobin available')
+        st.info('Only leave the field above blank if there is no Hemoglobin record in the past 72 hours, otherwise input the latest value of Hemoglobin available')
     return [input_features]
 
     
