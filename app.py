@@ -71,13 +71,14 @@ st.markdown('**For vital sign variables (including SpO2:FiO2 Ratio), enter the m
 st.markdown('**NB:** For missing values, please leave blank. Missing values will be automatically imputed using Multivariate Imputation by Chained Equations')
 def user_input_features():
     input_features = {}
+    pat = re.compile(r'^[0-9]*[.]{0,1}[0-9]*$')
     input_features["SpO2:FiO2 Ratio"] = st.text_input(label="SpO2:FiO2 Ratio", value="",help="This is a required field")
     if not input_features["SpO2:FiO2 Ratio"]:
         st.warning("SpO2:FiO2 Ratio is a required field. Please enter a value")
         st.stop()
-    elif input_features["SpO2:FiO2 Ratio"].isnumeric()==False:
-        st.error("Invalid input detected! Please enter a numeric value for SpO2:FiO2 Ratio")
-        st.stop()
+    elif not pat.match(input_features["SpO2:FiO2 Ratio"]):
+        st.error("Invalid input detected! Please enter a numeric value for SpO2:FiO2 Ratio")    
+        st.stop()    
     input_features["Respiratory Rate"] = st.text_input(label="Respiratory Rate (breaths/min)",value="",help="This is a required field") 
     if not input_features["Respiratory Rate"]:
         st.warning("Respiratory Rate is a required field. Please enter a value")
@@ -99,8 +100,7 @@ def user_input_features():
     elif input_features["Systolic Blood Pressure"].isnumeric()==False:
         st.error("Invalid input detected! Please enter a numeric value for Systolic Blood Pressure")
         st.stop()  
-    input_features["Albumin"] = st.text_input(label="Serum Albumin (g/L)", help="Leave blank if value is missing")
-    pat = re.compile(r'^[0-9]*[.]{0,1}[0-9]*$')
+    input_features["Albumin"] = st.text_input(label="Serum Albumin (g/L)", help="Leave blank if value is missing")    
     if not input_features["Albumin"]:
         st.info('Enter the latest value of Albumin in the past 72 hours. If not available, leave blank.')
     elif not pat.match(input_features["Albumin"]):
