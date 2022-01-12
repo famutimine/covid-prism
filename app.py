@@ -86,9 +86,6 @@ def user_input_features():
     elif input_features["Respiratory Rate"].isnumeric()==False:
         st.error("Invalid input detected! Please enter a numeric value for Respiratory Rate")
         st.stop()
-    elif input_features["Respiratory Rate"]>=200
-        st.error("Input for Respiratory Rate is beyond clinically possible limit! A valid input is required")
-        st.stop()
     input_features["Heart Rate"] = st.text_input(label="Heart Rate (beats/min)", value="",help="This is a required field")
     if not input_features["Heart Rate"]:
         st.warning("Heart Rate is a required field. Please enter a value")
@@ -133,6 +130,30 @@ try:
 except ValueError:
     st.error('Please enter a valid input')
     st.stop()
+    
+val=df['SpO2:FiO2 Ratio'].iloc[0]
+if not val < 477:
+    st.error('Error! Please enter a clinically valid value for SpO2:FiO2 Ratio')
+    st.stop()
+    
+val=df['Respiratory Rate'].iloc[0]
+if not val < 200:
+    st.error('Error! Please enter a clinically valid value for Respiratory Rate')
+    st.stop()
+    
+val=df['Heart Rate'].iloc[0]
+if not val < 700:
+    st.error('Error! Please enter a clinically valid value for Heart Rate')
+    st.stop()
+
+val=df['Systolic Blood Pressure'].iloc[0]
+if not val < 301:
+    st.error('Please enter a clinically valid value for Systolic Blood Pressure')
+    st.stop()
+elif not val >=30:
+    st.error('Please enter a clinically valid value for Systolic Blood Pressure')
+    st.stop()
+    
 X=pd.concat([X, df])
 lreg = LinearRegression()
 imp = IterativeImputer(estimator=lreg,missing_values=np.nan, max_iter=40, verbose=2, imputation_order='roman',random_state=123,tol=0.00001,min_value=0)
