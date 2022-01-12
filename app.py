@@ -78,7 +78,10 @@ def user_input_features():
         st.stop()
     elif not pat.match(input_features["SpO2:FiO2 Ratio"]):
         st.error("Invalid input detected! Please enter a numeric value for SpO2:FiO2 Ratio")    
-        st.stop()    
+        st.stop()
+    elif not int(input_features["SpO2:FiO2 Ratio"]) < 477:
+        st.error('Oops! Please enter a clinically valid value for SpO2:FiO2 Ratio')
+        st.stop()
     input_features["Respiratory Rate"] = st.text_input(label="Respiratory Rate (breaths/min)",value="",help="This is a required field") 
     if not input_features["Respiratory Rate"]:
         st.warning("Respiratory Rate is a required field. Please enter a value")
@@ -86,20 +89,29 @@ def user_input_features():
     elif input_features["Respiratory Rate"].isnumeric()==False:
         st.error("Invalid input detected! Please enter a numeric value for Respiratory Rate")
         st.stop()
+    elif not int(input_features["Respiratory Rate"]) < 250:
+        st.error('Oops! Please enter a clinically valid value for Respiratory Rate')
+        st.stop()
     input_features["Heart Rate"] = st.text_input(label="Heart Rate (beats/min)", value="",help="This is a required field")
     if not input_features["Heart Rate"]:
         st.warning("Heart Rate is a required field. Please enter a value")
         st.stop()
     elif input_features["Heart Rate"].isnumeric()==False:
         st.error("Invalid input detected! Please enter a numeric value for Heart Rate")
-        st.stop()  
+        st.stop()
+    elif not int(input_features["Heart Rate"]) < 650:
+        st.error('Oops! Please enter a clinically valid value for Heart Rate')
+        st.stop()
     input_features["Systolic Blood Pressure"] = st.text_input(label="Systolic Blood Pressure (mmHg)", value="",help="This is a required field")
     if not input_features["Systolic Blood Pressure"]:
         st.warning("Systolic Blood Pressure is a required field. Please enter a value")
         st.stop()
     elif input_features["Systolic Blood Pressure"].isnumeric()==False:
         st.error("Invalid input detected! Please enter a numeric value for Systolic Blood Pressure")
-        st.stop()  
+        st.stop()
+    elif not int(input_features["Systolic Blood Pressure"]) < 301:
+        st.error('Oops! Please enter a clinically valid value for Systolic Blood Pressure')
+        st.stop()
     input_features["Albumin"] = st.text_input(label="Serum Albumin (g/L)", help="Leave blank if value is missing")    
     if not input_features["Albumin"]:
         st.info('Enter the latest value of Albumin in the past 72 hours. If not available, leave blank.')
@@ -129,26 +141,6 @@ try:
    df[['SpO2:FiO2 Ratio', 'Respiratory Rate', 'Heart Rate','Systolic Blood Pressure','Albumin', 'Blood Urea Nitrogen', 'Hemoglobin']] = df[['SpO2:FiO2 Ratio', 'Respiratory Rate', 'Heart Rate','Systolic Blood Pressure','Albumin', 'Blood Urea Nitrogen', 'Hemoglobin']].apply(pd.to_numeric) 
 except ValueError:
     st.error('Please enter a valid input')
-    st.stop()
-    
-val=df['SpO2:FiO2 Ratio'].iloc[0]
-if not val < 477:
-    st.error('Oops! Please enter a clinically valid value for SpO2:FiO2 Ratio')
-    st.stop()
-    
-val=df['Respiratory Rate'].iloc[0]
-if not val < 250:
-    st.error('Oops! Please enter a clinically valid value for Respiratory Rate')
-    st.stop()
-    
-val=df['Heart Rate'].iloc[0]
-if not val < 650:
-    st.error('Oops! Please enter a clinically valid value for Heart Rate')
-    st.stop()
-
-val=df['Systolic Blood Pressure'].iloc[0]
-if not val < 301:
-    st.error('Oops! Please enter a clinically valid value for Systolic Blood Pressure')
     st.stop()
     
 X=pd.concat([X, df])
