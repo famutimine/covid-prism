@@ -160,7 +160,6 @@ cols=["Albumin", "Blood Urea Nitrogen", "Hemoglobin"]
 for col in cols:
     X[col]=X[col].round(1)
 
-
 df=X.tail(1)
 X_7=pd.concat([X_7, df])
 for col in cols:
