@@ -133,25 +133,22 @@ except ValueError:
     
 val=df['SpO2:FiO2 Ratio'].iloc[0]
 if not val < 477:
-    st.error('Error! Please enter a clinically valid value for SpO2:FiO2 Ratio')
+    st.error('Oops! Please enter a clinically valid value for SpO2:FiO2 Ratio')
     st.stop()
     
 val=df['Respiratory Rate'].iloc[0]
-if not val < 200:
-    st.error('Error! Please enter a clinically valid value for Respiratory Rate')
+if not val < 250:
+    st.error('Oops! Please enter a clinically valid value for Respiratory Rate')
     st.stop()
     
 val=df['Heart Rate'].iloc[0]
-if not val < 700:
-    st.error('Error! Please enter a clinically valid value for Heart Rate')
+if not val < 650:
+    st.error('Oops! Please enter a clinically valid value for Heart Rate')
     st.stop()
 
 val=df['Systolic Blood Pressure'].iloc[0]
 if not val < 301:
-    st.error('Please enter a clinically valid value for Systolic Blood Pressure')
-    st.stop()
-elif not val >=30:
-    st.error('Please enter a clinically valid value for Systolic Blood Pressure')
+    st.error('Oops! Please enter a clinically valid value for Systolic Blood Pressure')
     st.stop()
     
 X=pd.concat([X, df])
