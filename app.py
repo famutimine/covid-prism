@@ -85,7 +85,10 @@ def user_input_features():
         st.stop()
     elif input_features["Respiratory Rate"].isnumeric()==False:
         st.error("Invalid input detected! Please enter a numeric value for Respiratory Rate")
-        st.stop()    
+        st.stop()
+    elif input_features["Respiratory Rate"]>=200
+        st.error("Input for Respiratory Rate is beyond clinically possible limit! A valid input is required")
+        st.stop()
     input_features["Heart Rate"] = st.text_input(label="Heart Rate (beats/min)", value="",help="This is a required field")
     if not input_features["Heart Rate"]:
         st.warning("Heart Rate is a required field. Please enter a value")
