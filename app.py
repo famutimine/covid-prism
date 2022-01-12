@@ -79,7 +79,7 @@ def user_input_features():
     elif not pat.match(input_features["SpO2:FiO2 Ratio"]):
         st.error("Invalid input detected! Please enter a numeric value for SpO2:FiO2 Ratio")    
         st.stop()
-    elif not int(input_features["SpO2:FiO2 Ratio"]) < 477:
+    elif not float(input_features["SpO2:FiO2 Ratio"]) < 477:
         st.error('Oops! Please enter a clinically valid value for SpO2:FiO2 Ratio')
         st.stop()
     input_features["Respiratory Rate"] = st.text_input(label="Respiratory Rate (breaths/min)",value="",help="This is a required field") 
@@ -89,7 +89,7 @@ def user_input_features():
     elif input_features["Respiratory Rate"].isnumeric()==False:
         st.error("Invalid input detected! Please enter a numeric value for Respiratory Rate")
         st.stop()
-    elif not int(input_features["Respiratory Rate"]) < 250:
+    elif not float(input_features["Respiratory Rate"]) < 250:
         st.error('Oops! Please enter a clinically valid value for Respiratory Rate')
         st.stop()
     input_features["Heart Rate"] = st.text_input(label="Heart Rate (beats/min)", value="",help="This is a required field")
@@ -99,7 +99,7 @@ def user_input_features():
     elif input_features["Heart Rate"].isnumeric()==False:
         st.error("Invalid input detected! Please enter a numeric value for Heart Rate")
         st.stop()
-    elif not int(input_features["Heart Rate"]) < 650:
+    elif not float(input_features["Heart Rate"]) < 650:
         st.error('Oops! Please enter a clinically valid value for Heart Rate')
         st.stop()
     input_features["Systolic Blood Pressure"] = st.text_input(label="Systolic Blood Pressure (mmHg)", value="",help="This is a required field")
@@ -109,7 +109,7 @@ def user_input_features():
     elif input_features["Systolic Blood Pressure"].isnumeric()==False:
         st.error("Invalid input detected! Please enter a numeric value for Systolic Blood Pressure")
         st.stop()
-    elif not int(input_features["Systolic Blood Pressure"]) < 301:
+    elif not float(input_features["Systolic Blood Pressure"]) < 301:
         st.error('Oops! Please enter a clinically valid value for Systolic Blood Pressure')
         st.stop()
     input_features["Albumin"] = st.text_input(label="Serum Albumin (g/L)", help="Leave blank if value is missing")    
