@@ -187,10 +187,6 @@ if submit:
     st.pyplot(fig7)
     st.write('''Variables corresponding to the red arrow increased the prediction (increased the risk), while variables corresponding to the blue arrow decreased prediction (decreased the risk) for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
 
-import pyautogui 
-if st.button("Reset"):
-    pyautogui.hotkey("ctrl","F5")
- 
 hide_footer_style = """
 <style>
 .reportview-container .main footer {visibility: hidden;}    
