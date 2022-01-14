@@ -187,11 +187,12 @@ if submit:
     st.pyplot(fig7)
     st.write('''Variables corresponding to the red arrow increased the prediction (increased the risk), while variables corresponding to the blue arrow decreased prediction (decreased the risk) for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
 
-session = st.session_state.get(run_id=0)
-slider_element = st.empty()
-if st.button("Reset"):
-  session.run_id += 1
-slider_element.slider("Slide me!", 0, 100, key=session.run_id)
+placeholder = st.empty()
+with placeholder.container():
+    st.title("Reset")
+    btn = st.button("Reset")
+if btn:
+    placeholder.empty()
  
 hide_footer_style = """
 <style>
