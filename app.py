@@ -67,14 +67,14 @@ model.fit(X, Y)
 model7=XGBClassifier()
 model7.fit(X_7, Y_7)
 st.write('---')
-st.markdown('**For vital sign variables (including SpO2:FiO2 Ratio), enter the most recent value within the last 24 hours. For laboratory variables, enter the most recent value in the last 72 hours.**')
-st.markdown('**NB:** For missing values, please leave blank. Missing values will be automatically imputed using Multivariate Imputation by Chained Equations')
+st.markdown('**For vital sign variables, enter the most recent value within the last 24 hours. For laboratory variables, enter the most recent value in the last 72 hours.**')
+st.markdown('**NB:** If a variable value is missing, please leave blank. Missing values will be automatically imputed using Multivariate Imputation by Chained Equations')
 def user_input_features():
     input_features = {}
     pat = re.compile(r'^[0-9]*[.]{0,1}[0-9]*$')
     input_features["SpO2:FiO2 Ratio"] = st.text_input(label="SpO2:FiO2 Ratio", value="",help="This is a required field")
     if not input_features["SpO2:FiO2 Ratio"]:
-        st.warning("SpO2:FiO2 Ratio is a required field. Please enter a value")
+        st.warning("SpO2:FiO2 Ratio is a required field. Please enter the most recent value within the last 24 hours")
         st.stop()
     elif not pat.match(input_features["SpO2:FiO2 Ratio"]):
         st.error("Invalid input detected! Please enter a numeric value for SpO2:FiO2 Ratio")    
@@ -84,7 +84,7 @@ def user_input_features():
         st.stop()
     input_features["Respiratory Rate"] = st.text_input(label="Respiratory Rate (breaths/min)",value="",help="This is a required field") 
     if not input_features["Respiratory Rate"]:
-        st.warning("Respiratory Rate is a required field. Please enter a value")
+        st.warning("Respiratory Rate is a required field. Please enter the most recent value within the last 24 hours")
         st.stop()
     elif input_features["Respiratory Rate"].isnumeric()==False:
         st.error("Invalid input detected! Please enter a numeric value for Respiratory Rate")
@@ -94,7 +94,7 @@ def user_input_features():
         st.stop()
     input_features["Heart Rate"] = st.text_input(label="Heart Rate (beats/min)", value="",help="This is a required field")
     if not input_features["Heart Rate"]:
-        st.warning("Heart Rate is a required field. Please enter a value")
+        st.warning("Heart Rate is a required field. Please enter the most recent value within the last 24 hours")
         st.stop()
     elif input_features["Heart Rate"].isnumeric()==False:
         st.error("Invalid input detected! Please enter a numeric value for Heart Rate")
@@ -104,7 +104,7 @@ def user_input_features():
         st.stop()
     input_features["Systolic Blood Pressure"] = st.text_input(label="Systolic Blood Pressure (mmHg)", value="",help="This is a required field")
     if not input_features["Systolic Blood Pressure"]:
-        st.warning("Systolic Blood Pressure is a required field. Please enter a value")
+        st.warning("Systolic Blood Pressure is a required field. Please enter the most recent value within the last 24 hours")
         st.stop()
     elif input_features["Systolic Blood Pressure"].isnumeric()==False:
         st.error("Invalid input detected! Please enter a numeric value for Systolic Blood Pressure")
