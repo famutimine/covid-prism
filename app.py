@@ -187,12 +187,10 @@ if submit:
     st.pyplot(fig7)
     st.write('''Variables corresponding to the red arrow increased the prediction (increased the risk), while variables corresponding to the blue arrow decreased prediction (decreased the risk) for this patient. The magnitude of effect of each variable is indicated by the numerical value labels.''')
 
-placeholder = st.empty()
-with placeholder.container():
-    st.title("Reset")
-    btn = st.button("Reset")
+from streamlit import caching
+btn = st.button("Reset")
 if btn:
-    placeholder.empty()
+    caching.clear_cache()
  
 hide_footer_style = """
 <style>
