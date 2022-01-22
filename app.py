@@ -67,7 +67,7 @@ model.fit(X, Y)
 model7=XGBClassifier()
 model7.fit(X_7, Y_7)
 st.write('---')
-st.markdown('**For vital sign variables, enter the most recent value in the last 24 hours. For laboratory variables, enter the most recent value in the last 72 hours.**')
+st.markdown('**For vital sign variables, enter the most recent value in the last 24 hours. For laboratory variables, enter the most recent value in the last 48 hours.**')
 st.markdown('**NB:** If a variable value is missing, please leave blank. Missing values will be automatically imputed using Multivariate Imputation by Chained Equations')
 def user_input_features():
     input_features = {}
